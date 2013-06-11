@@ -1,0 +1,8 @@
+-300
+300
+exit
+Exit?
+{
+MENEXIT01[0:-80:500:40]""(Yes!):exit_;[BUTTON]
+MENEXIT02[0:-120:500:40]""(No...):openMenu_main;[BUTTON]
+}

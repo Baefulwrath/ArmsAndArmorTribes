@@ -1,0 +1,27 @@
+titl Editor Container 02
+idid test2
+acti true
+xval 0
+yval 100
+widt 200
+heig -100
+conh 20
+stat STATIC
+type EDITOR
+alig BOTTOM_LEFT
+fill HEIGHT
+deco false
+tran 0.9
+back true
+# - CONTENT
+(MENU)<
+0
+0
+brushmenu
+Brush Menu
+{
+EDICON02_01[0:-170:150:150]"setActImage_EDICON01_Climate_GET_BRUSHCLIMATE_TEG#setActTitle_EDICON01_Climate_GET_BRUSHCLIMATE_TEG"(Climate):;[BUTTON]
+EDICON02_02[0:-330:150:150]"setActImage_EDICON02_Terrain_GET_BRUSHTERRAIN_TEG#setActTitle_EDICON02_Terrain_GET_BRUSHTERRAIN_TEG"(Terrain):;[BUTTON]
+}
+>
+-<ENDOFFILE>-

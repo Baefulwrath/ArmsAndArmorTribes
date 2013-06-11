@@ -1,0 +1,8 @@
+-300
+300
+about
+About
+{
+MENABOUT01[0:-80:500:40]""(NOTHING HERE YET):;[TEXT]
+MENABOUT02[0:-120:500:40]""(Back):openMenu_main;[BUTTON]
+}

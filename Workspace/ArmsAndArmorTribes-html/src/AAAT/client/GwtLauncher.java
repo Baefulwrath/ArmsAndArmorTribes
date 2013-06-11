@@ -1,6 +1,6 @@
 package AAAT.client;
 
-import AAAT.MyGdxGame;
+import AAAT.AAAT;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
@@ -14,6 +14,6 @@ public class GwtLauncher extends GwtApplication {
 
 	@Override
 	public ApplicationListener getApplicationListener () {
-		return new MyGdxGame();
+		return new AAAT();
 	}
 }
