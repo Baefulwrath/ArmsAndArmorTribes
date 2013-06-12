@@ -2,7 +2,10 @@ package render;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 import world.Cell;
 import world.GameMap;
@@ -25,11 +28,12 @@ public abstract class Renderer {
 				Sprite terImg = Worldhandler.getTerrainImage(C.TERRAIN);
 				Sprite gridImg = Worldhandler.gridImg;
 				int diameter = Worldhandler.hexDiameter;
-				drawImage(cliImg, C.X, C.Y, diameter, diameter, 0, false, Color.WHITE, 1.0f, false);
-				drawImage(terImg, C.X, C.Y, diameter, diameter, 0, false, Color.WHITE, 1.0f, false);
+				drawImage(cliImg, C.X, C.Y, diameter, diameter, 0, false, Color.WHITE, 1.0f, true);
+				drawImage(terImg, C.X, C.Y, diameter, diameter, 0, false, Color.WHITE, 1.0f, true);
 				if(Worldhandler.showGrid){
-					drawImage(gridImg, C.X, C.Y, diameter, diameter, 0, false, Color.WHITE, 1.0f, false);
+					drawImage(gridImg, C.X, C.Y, diameter, diameter, 0, false, Color.WHITE, 1.0f, true);
 				}
+				drawString(x + ", " + y, C.X, C.Y, Fonthandler.com10, Color.RED, 0.5f);
 			}
 		}
 	}
@@ -74,5 +78,13 @@ public abstract class Renderer {
     
     private void actualDrawImage(Sprite sprite){
     	sprite.draw(Renderinghandler.batch);
+    }
+
+    public void drawString(String string, float x, float y, BitmapFont font, Color col, float opacity) {
+    	y -= font.getCapHeight();
+        LabelStyle style = new LabelStyle(font, col);
+        Label lab = new Label(string, style);
+        lab.setPosition(x, y);
+        lab.draw(Renderinghandler.batch, opacity);
     }
 }

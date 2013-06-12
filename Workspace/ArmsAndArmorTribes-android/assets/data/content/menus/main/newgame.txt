@@ -1,9 +1,0 @@
--300
-300
-newgame
-New Game
-{
-MENNEWGAME01[0:-80:500:40]""(TO BE IMPLEMENTED):;[TEXT]
-MENNEWGAME02[0:-120:500:40]""(Temp Start Game):startgame_;[BUTTON]
-MENNEWGAME03[0:-160:500:40]""(Back):openMenu_main;[BUTTON]
-}

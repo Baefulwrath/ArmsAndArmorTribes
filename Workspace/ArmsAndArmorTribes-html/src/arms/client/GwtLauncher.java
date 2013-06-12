@@ -1,6 +1,7 @@
-package AAAT.client;
+package arms.client;
 
-import AAAT.AAAT;
+import arms.AAAT;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;

@@ -67,7 +67,7 @@ public class GameMap {
     }
 
     private float getCellX(int cx, int cy){
-    	float temp = 0;
+    	float temp = X;
         temp = cx * CELLS[cx][cy].WIDTH;
         if(cy % 2 == 0){
         	temp += CELLS[cx][cy].RADIUS;
@@ -76,7 +76,7 @@ public class GameMap {
     }
     
     private float getCellY(int cx, int cy){
-    	float temp = 0;
+    	float temp = Y;
         temp = - (CELLS[cx][cy].SIDE * 1.5f) * cy;
         return temp;
     }

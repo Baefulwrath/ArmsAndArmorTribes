@@ -1,8 +1,0 @@
--300
-300
-options
-Options
-{
-MENOPTIONS01[0:-80:500:40]""(NO OPTIONS YET.):;[TEXT]
-MENOPTIONS02[0:-120:500:40]""(Back):openMenu_main;[BUTTON]
-}

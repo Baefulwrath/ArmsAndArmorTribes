@@ -21,7 +21,7 @@ public class Editor_Renderer extends Renderer {
 	public void mobileRender() {
 		Brush brush = Editorhandler.brush;
 		drawMap(Editorhandler.map);
-		drawImage(brush.sprite, brush.BOX.x, brush.BOX.y, brush.BOX.width, brush.BOX.height, 0, false, Color.WHITE, 0.5f, true);
+		drawImage(brush.sprite, brush.BOX.x, brush.BOX.y, brush.BOX.width, brush.BOX.height, 0, false, Color.WHITE, 0.5f, false);
 	}
 
 	@Override

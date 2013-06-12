@@ -1,0 +1,11 @@
+testmenu
+Test Menu
+MENU
+:
+LABEL<
+test
+0
+0
+#FFFFFF
+com10
+>

@@ -1,5 +1,6 @@
 package render;
 
+import static arms.State.*;
 import static com.badlogic.gdx.Gdx.*;
 
 import java.util.HashMap;
@@ -8,6 +9,9 @@ import java.util.Map;
 import world.GameMap;
 
 import static com.badlogic.gdx.graphics.GL10.*;
+
+
+import arms.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,16 +27,13 @@ public class Renderinghandler {
 	public static OrthographicCamera camera;
 	public static SpriteBatch batch;
 	public static boolean initialized = false;
-	public static HashMap<String, Renderer> renderers = new HashMap<String, Renderer>();
-	public static String activeRenderer = "";
-
-    public BitmapFont com64;
-    public BitmapFont com32;
-    public BitmapFont com16;
-    public BitmapFont com10;
-    public BitmapFont com32_BI;
-    public BitmapFont com16_BI;
-    public BitmapFont com10_BI;
+	public static HashMap<State, Renderer> renderers = new HashMap<State, Renderer>();
+	public static float zoomMax = graphics.getWidth() * 4;
+	public static float zoomMin = graphics.getWidth() / 4;
+	public static float zoomSpeed = 32;
+	public static boolean zoomIn = false;
+	public static boolean zoomOut = false;
+	
     
     public static Sprite testImg;
 	
@@ -43,20 +44,21 @@ public class Renderinghandler {
 		batch = new SpriteBatch();
 		testImg = new Sprite(new Texture(Gdx.files.internal("data/testImg.png")));
 		setupRenderers();
+		Fonthandler.load();
 	}
 	
 	public static void setupRenderers(){
 		Menu_Renderer menuRenderer = new Menu_Renderer();
-		renderers.put(menuRenderer.ID, menuRenderer);
+		renderers.put(MENU, menuRenderer);
 		Game_Renderer gameRenderer = new Game_Renderer();
-		renderers.put(gameRenderer.ID, gameRenderer);
+		renderers.put(GAME, gameRenderer);
 		Editor_Renderer editorRenderer = new Editor_Renderer();
-		renderers.put(editorRenderer.ID, editorRenderer);
-		
-		activeRenderer = menuRenderer.ID;
+		renderers.put(EDITOR, editorRenderer);
 	}
 	
 	public static void render(){
+		zoomIn();
+		zoomOut();
 		newFrame();
 		mobileRender();
 		staticRender();
@@ -96,9 +98,9 @@ public class Renderinghandler {
 	
 	public static void doRender(boolean mobile){
 		if(mobile){
-			renderers.get(activeRenderer).mobileRender();
+			getActiveRenderer().mobileRender();
 		}else{
-			renderers.get(activeRenderer).staticRender();
+			getActiveRenderer().staticRender();
 		}
 	}
 	
@@ -113,7 +115,18 @@ public class Renderinghandler {
     public static float getZoomScale_In(){
     	return zoom / w - 1;
     }
+    
+    public static void zoomIn(){
+    	if(zoomIn && zoom > zoomMin){
+    		zoom -= zoomSpeed;
+    	}
+    }
 
+    public static void zoomOut(){
+    	if(zoomOut && zoom < zoomMax){
+    		zoom += zoomSpeed;
+    	}
+    }
 
     public static float getScreenX() {
         return -(w / 2);
@@ -121,6 +134,10 @@ public class Renderinghandler {
 
     public static float getScreenY() {
         return -(h / 2);
+    }
+    
+    public static Renderer getActiveRenderer(){
+    	return renderers.get(AAAT.state);
     }
 	
 }

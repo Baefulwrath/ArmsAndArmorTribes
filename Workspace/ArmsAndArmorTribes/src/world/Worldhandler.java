@@ -21,6 +21,7 @@ public class Worldhandler {
 	public static Texture climatemap;
 	public static Sprite gridImg;
 	public static int activeMap = 0;
+    public static int mapSpeedBase = 16;
     public static int mapSpeed = 32;
     public static int hexDiameter = 128;
     public static int hexWidth = 110;
@@ -31,7 +32,7 @@ public class Worldhandler {
 	public static boolean moveLeft = false;
 	public static boolean moveRight = false;
 	private static long lastMovement = 0;
-	private static long movementInterval = 50;
+	private static long movementInterval = 25;
 
     
 	public static void update(){
@@ -39,6 +40,7 @@ public class Worldhandler {
 			move();
 		}
 		getMap().update();
+		mapSpeed = (int) (mapSpeedBase * Renderinghandler.getZoomScale());
 	}
     
     public static void load(){

@@ -1,8 +1,0 @@
--300
-300
-main
-Game Paused
-{
-GAMMAIN01[0:-80:500:40]""(Continue):continue_;[BUTTON]
-GAMMAIN02[0:-120:500:40]""(Main Menu):endgame_;[BUTTON]
-}

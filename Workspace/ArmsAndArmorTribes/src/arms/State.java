@@ -1,4 +1,4 @@
-package AAAT;
+package arms;
 
 public enum State {
     DEFAULT, MENU, GAME, EDITOR;

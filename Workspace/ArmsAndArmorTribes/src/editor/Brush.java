@@ -29,7 +29,7 @@ public class Brush extends Cell{
 	}
 	
 	public void update(int x, int y){
-		BOX = new Rectangle(x, y, size, size);
+		BOX = new Rectangle(x - (size / 2), y - (size / 2), size, size);
 	}
 	
 }

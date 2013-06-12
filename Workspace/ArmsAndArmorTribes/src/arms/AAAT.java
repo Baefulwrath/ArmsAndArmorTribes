@@ -1,21 +1,22 @@
-package AAAT;
+package arms;
 
 import input.Inputhandler;
 import render.Renderinghandler;
+import ui.Menuhandler;
 import world.Worldhandler;
 
 import com.badlogic.gdx.ApplicationListener;
 
+import static arms.State.*;
 import static com.badlogic.gdx.Gdx.*;
 
 import editor.Editorhandler;
-import static AAAT.State.*;
 
 public class AAAT implements ApplicationListener {
-	private long lastRender = 0;
-	private long renderInterval = 5;
+	private static long lastRender = 0;
+	private static long renderInterval = 5;
     public static int fps = 120;
-    public State state = EDITOR;
+    public static State state = MENU;
 	
 	@Override
 	public void create() {
@@ -23,6 +24,7 @@ public class AAAT implements ApplicationListener {
 		Worldhandler.load();
 		Editorhandler.setup();
 		Inputhandler inputhandler = new Inputhandler();
+		Menuhandler.loadMenus();
 		input.setInputProcessor(inputhandler);
 	}
 
@@ -39,17 +41,15 @@ public class AAAT implements ApplicationListener {
 				case DEFAULT:
 					break;
 				case MENU:
-					Renderinghandler.activeRenderer = "MENU";
 					break;
 				case EDITOR:
-					Renderinghandler.activeRenderer = "EDITOR";
 					Editorhandler.update();
 					break;
 				case GAME:
-					Renderinghandler.activeRenderer = "GAME";
 					Worldhandler.update();
 					break;
 			}
+			Menuhandler.update();
 			if(readyToRender()){
 				Renderinghandler.render();
 			}

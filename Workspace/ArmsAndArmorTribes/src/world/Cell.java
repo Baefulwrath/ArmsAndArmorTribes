@@ -36,8 +36,8 @@ public class Cell {
     }
     
     private void setRealPolygon(int mx, int my){
-        int[] vertX = {0 + X + mx, RADIUS + X + mx, RADIUS + X + mx, 0 + X + mx, -RADIUS + X + mx, -RADIUS + X + mx};
-        int[] vertY = {SIDE + Y + my, HALFSIDE + Y + my, -HALFSIDE + Y + my, -SIDE + Y + my, -HALFSIDE + Y + my, HALFSIDE + Y + my};
+        int[] vertX = {0 + X, RADIUS + X, RADIUS + X, 0 + X, -RADIUS + X, -RADIUS + X};
+        int[] vertY = {SIDE + Y, HALFSIDE + Y, -HALFSIDE + Y, -SIDE + Y, -HALFSIDE + Y, HALFSIDE + Y};
         realPolygon = new Polygon(vertX, vertY, 6);
     }
     
