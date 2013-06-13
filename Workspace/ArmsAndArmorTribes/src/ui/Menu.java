@@ -3,7 +3,7 @@ package ui;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import render.Fonthandler;
+import render.Assethandler;
 
 import arms.State;
 
@@ -20,8 +20,33 @@ public class Menu {
 	public State STATE = State.DEFAULT;
 	public String ID = "";
 	public String TITLE = "";
+	public float OPACITY = 1.0f;
+	public boolean RENDERTITLE = false;
+	public int TITLEX = 0;
+	public int TITLEY = 0;
 	
-	public void update(){}
+	public void update(){
+		clear();
+		setup();
+	}
+	public void clear(){
+		labels.clear();
+		images.clear();
+		textButtons.clear();
+		imageButtons.clear();
+	}
+	
+	public void setup(){}
+	
+	public void set(String id, String title, State state, float opacity, boolean renderTitle, int titleX, int titleY){
+		ID = id;
+		TITLE = title;
+		STATE = state;
+		OPACITY = opacity;
+		RENDERTITLE = renderTitle;
+		TITLEX = titleX;
+		TITLEY = titleY;
+	}
 	
 	public static Menu parseMenu(String s){
 		Menu m = new Menu();
@@ -54,8 +79,8 @@ public class Menu {
 		String text = reader.nextLine();
 		int x = Integer.parseInt(reader.nextLine());
 		int y = Integer.parseInt(reader.nextLine());
-		Color color = Color.valueOf((reader.nextLine()));
-		BitmapFont font = Fonthandler.parseFont(reader.nextLine());
+		Color color = Color.valueOf(reader.nextLine());
+		BitmapFont font = Assethandler.parseFont(reader.nextLine());
         LabelStyle style = new LabelStyle(font, color);
 		Label l = new Label(text, style);
         l.setPosition(x, y);

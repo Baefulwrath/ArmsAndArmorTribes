@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
+import ui.Menu;
 import world.Cell;
 import world.GameMap;
 import world.Worldhandler;
+import static render.Assethandler.*;
 
 public abstract class Renderer {
 	public Renderer(String id){
@@ -33,7 +35,7 @@ public abstract class Renderer {
 				if(Worldhandler.showGrid){
 					drawImage(gridImg, C.X, C.Y, diameter, diameter, 0, false, Color.WHITE, 1.0f, true);
 				}
-				drawString(x + ", " + y, C.X, C.Y, Fonthandler.com10, Color.RED, 0.5f);
+				drawString(x + ", " + y, C.X, C.Y, debugStyle, 0.5f);
 			}
 		}
 	}
@@ -80,11 +82,25 @@ public abstract class Renderer {
     	sprite.draw(Renderinghandler.batch);
     }
 
-    public void drawString(String string, float x, float y, BitmapFont font, Color col, float opacity) {
-    	y -= font.getCapHeight();
-        LabelStyle style = new LabelStyle(font, col);
+    public void drawString(String string, float x, float y, LabelStyle style, float opacity) {
+    	y -= style.font.getCapHeight();
         Label lab = new Label(string, style);
         lab.setPosition(x, y);
         lab.draw(Renderinghandler.batch, opacity);
+    }
+    
+    public void drawMenu(Menu m){
+    	for(int i = 0; i < m.labels.size(); i++){
+            m.labels.get(i).draw(Renderinghandler.batch, m.OPACITY);
+    	}
+    	for(int i = 0; i < m.images.size(); i++){
+            m.images.get(i).draw(Renderinghandler.batch, m.OPACITY);
+    	}
+    	for(int i = 0; i < m.textButtons.size(); i++){
+            m.textButtons.get(i).draw(Renderinghandler.batch, m.OPACITY);
+    	}
+    	for(int i = 0; i < m.imageButtons.size(); i++){
+            m.imageButtons.get(i).draw(Renderinghandler.batch, m.OPACITY);
+    	}
     }
 }

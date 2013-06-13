@@ -1,5 +1,6 @@
 package render;
 
+import ui.Menuhandler;
 import world.Worldhandler;
 
 import com.badlogic.gdx.graphics.Color;
@@ -26,6 +27,9 @@ public class Editor_Renderer extends Renderer {
 
 	@Override
 	public void staticRender() {
+		if(Editorhandler.paused){
+			drawMenu(Menuhandler.getMenu());
+		}
 	}
 
 }

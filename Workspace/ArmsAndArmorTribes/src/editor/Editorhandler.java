@@ -14,6 +14,7 @@ public class Editorhandler {
 	public static int newMapH = 12;
 	public static GameMap map = new GameMap(newMapW, newMapH, Worldhandler.hexWidth, Worldhandler.hexDiameter);	
 	public static boolean painting = false;
+	public static boolean paused = false;
 	
     public static int mapSpeed = 32;
     public static int mapSpeedBase = 16;

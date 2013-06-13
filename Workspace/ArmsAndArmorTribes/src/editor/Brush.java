@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import world.Cell;
+import world.Worldhandler;
 
 public class Brush extends Cell{
 
@@ -30,6 +31,14 @@ public class Brush extends Cell{
 	
 	public void update(int x, int y){
 		BOX = new Rectangle(x - (size / 2), y - (size / 2), size, size);
+	}
+	
+	public Sprite getClimateSprite(){
+		return Worldhandler.getClimateImage(CLIMATE);
+	}
+	
+	public Sprite getTerrainSprite(){
+		return Worldhandler.getTerrainImage(TERRAIN);
 	}
 	
 }

@@ -21,7 +21,8 @@ public class Menuhandler {
 	
 	public static void loadMenus(){
 		menus.put("MENU_mainmenu", new Menu_MainMenu());
-		loadMenusFromFolder();
+		//loadMenusFromFolder();
+		activeMenu = "MENU_mainmenu";
 	}
 	
 	private static void loadMenusFromFolder(){
@@ -46,6 +47,10 @@ public class Menuhandler {
         }else{
         	System.out.println("NO MENUS TO LOAD");
         }
+	}
+	
+	public static Menu getMenu(){
+		return menus.get(activeMenu);
 	}
 	
 }
