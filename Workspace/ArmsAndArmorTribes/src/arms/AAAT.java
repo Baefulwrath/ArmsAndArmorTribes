@@ -1,6 +1,7 @@
 package arms;
 
 import input.Inputhandler;
+import render.UIAssethandler;
 import render.Renderinghandler;
 import ui.Menuhandler;
 import world.Worldhandler;
@@ -31,6 +32,7 @@ public class AAAT implements ApplicationListener {
 	@Override
 	public void dispose() {
 		Renderinghandler.dispose();
+		UIAssethandler.dispose();
 	}
 
 	@Override

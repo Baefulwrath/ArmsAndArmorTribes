@@ -11,7 +11,7 @@ import ui.Menu;
 import world.Cell;
 import world.GameMap;
 import world.Worldhandler;
-import static render.Assethandler.*;
+import static render.UIAssethandler.*;
 
 public abstract class Renderer {
 	public Renderer(String id){
@@ -35,7 +35,7 @@ public abstract class Renderer {
 				if(Worldhandler.showGrid){
 					drawImage(gridImg, C.X, C.Y, diameter, diameter, 0, false, Color.WHITE, 1.0f, true);
 				}
-				drawString(x + ", " + y, C.X, C.Y, debugStyle, 0.5f);
+				drawString(x + ", " + y, C.X, C.Y, debugLabelStyle, 0.5f);
 			}
 		}
 	}

@@ -110,9 +110,6 @@ public class Main {
 		String name = "";
 		name = JOptionPane.showInputDialog(frame, "Enter File Name", "Enter File Name");
 		try{
-			if(name.length() < 6 || !name.substring(name.length() - 6).equals(".atlas")){
-				name += ".atlas";
-			}
 			packFileName = name;
 			filenameSet = true;
 		}catch(Exception ex){}

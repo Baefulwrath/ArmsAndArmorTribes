@@ -3,7 +3,7 @@ package ui;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import render.Assethandler;
+import render.UIAssethandler;
 
 import arms.State;
 
@@ -80,7 +80,7 @@ public class Menu {
 		int x = Integer.parseInt(reader.nextLine());
 		int y = Integer.parseInt(reader.nextLine());
 		Color color = Color.valueOf(reader.nextLine());
-		BitmapFont font = Assethandler.parseFont(reader.nextLine());
+		BitmapFont font = UIAssethandler.parseFont(reader.nextLine());
         LabelStyle style = new LabelStyle(font, color);
 		Label l = new Label(text, style);
         l.setPosition(x, y);

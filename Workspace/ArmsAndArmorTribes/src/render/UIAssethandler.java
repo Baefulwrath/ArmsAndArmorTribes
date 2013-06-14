@@ -7,10 +7,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
-public class Assethandler {
-	
-	public static AssetManager manager = new AssetManager();
+public class UIAssethandler {
 	
     private static BitmapFont com64;
     private static BitmapFont com32;
@@ -20,11 +19,13 @@ public class Assethandler {
     private static BitmapFont com16_BI;
     private static BitmapFont com10_BI;
     
-    public static LabelStyle messageStyle;
-    public static LabelStyle logoStyle;
-    public static LabelStyle debugStyle;
+    public static LabelStyle messageLabelStyle;
+    public static LabelStyle logoLabelStyle;
+    public static LabelStyle debugLabelStyle;
     
-    public static Skin debugSkin;
+    public static TextButtonStyle basicTextbuttonStyle;
+    
+    public static Skin basicSkin;
     
     public static void load(){
     	try{
@@ -36,12 +37,16 @@ public class Assethandler {
             com16_BI = new BitmapFont(Gdx.files.internal("data/fonts/com16_BI.fnt"), Gdx.files.internal("data/fonts/com16_BI.png"), false, false);
             com10_BI = new BitmapFont(Gdx.files.internal("data/fonts/com10_BI.fnt"), Gdx.files.internal("data/fonts/com10_BI.png"), false, false);
 
-        	messageStyle = new LabelStyle(Assethandler.com10, Color.CYAN);
-        	logoStyle = new LabelStyle(Assethandler.com64, Color.WHITE);
-        	logoStyle = new LabelStyle(Assethandler.com10, Color.RED);
-        	manager.load("data/fonts/debuSkinAtlas.atlas", TextureAtlas.class);
-        	TextureAtlas debuSkinAtlas = manager.get("debuSkinAtlas.atlas", TextureAtlas.class);
-        	debugSkin = new Skin(Gdx.files.internal("data/fonts/debugSkin01.json"), debuSkinAtlas);
+            messageLabelStyle = new LabelStyle(UIAssethandler.com10, Color.CYAN);
+            logoLabelStyle = new LabelStyle(UIAssethandler.com64, Color.WHITE);
+            debugLabelStyle = new LabelStyle(UIAssethandler.com10, Color.RED);
+        	
+        	TextureAtlas basicSkinAtlas = new TextureAtlas(Gdx.files.internal("data/fonts/basicButton.pack"));
+        	basicSkin = new Skin(basicSkinAtlas);
+        	basicTextbuttonStyle = new TextButtonStyle();
+        	basicTextbuttonStyle.up = basicSkin.getDrawable("basicButtonUp");
+        	basicTextbuttonStyle.down = basicSkin.getDrawable("basicButtonDown");
+        	basicTextbuttonStyle.font = com10;
     	}catch(Exception ex){
     		ex.printStackTrace(System.out);
     	}
@@ -68,4 +73,10 @@ public class Assethandler {
     	return font;
     }
     
+    public static void dispose(){
+    	
+    }
+    
 }
+
+

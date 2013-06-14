@@ -44,7 +44,7 @@ public class Renderinghandler {
 		batch = new SpriteBatch();
 		testImg = new Sprite(new Texture(Gdx.files.internal("data/testImg.png")));
 		setupRenderers();
-		Assethandler.load();
+		UIAssethandler.load();
 	}
 	
 	public static void setupRenderers(){
