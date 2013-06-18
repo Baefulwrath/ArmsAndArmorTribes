@@ -22,6 +22,7 @@ public class UIAssethandler {
     public static LabelStyle messageLabelStyle;
     public static LabelStyle logoLabelStyle;
     public static LabelStyle debugLabelStyle;
+    public static LabelStyle titleLabelStyle;
     
     public static TextButtonStyle basicTextbuttonStyle;
     
@@ -40,6 +41,7 @@ public class UIAssethandler {
             messageLabelStyle = new LabelStyle(UIAssethandler.com10, Color.CYAN);
             logoLabelStyle = new LabelStyle(UIAssethandler.com64, Color.WHITE);
             debugLabelStyle = new LabelStyle(UIAssethandler.com10, Color.RED);
+            titleLabelStyle = new LabelStyle(UIAssethandler.com32_BI, Color.WHITE);
         	
         	TextureAtlas basicSkinAtlas = new TextureAtlas(Gdx.files.internal("data/fonts/basicButton.pack"));
         	basicSkin = new Skin(basicSkinAtlas);

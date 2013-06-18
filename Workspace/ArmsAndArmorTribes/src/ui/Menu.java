@@ -48,6 +48,16 @@ public class Menu {
 		TITLEY = titleY;
 	}
 	
+	public void set(String id, State state, float opacity){
+		ID = id;
+		TITLE = "UNTITLED";
+		STATE = state;
+		OPACITY = opacity;
+		RENDERTITLE = false;
+		TITLEX = 0;
+		TITLEY = 0;
+	}
+	
 	public static Menu parseMenu(String s){
 		Menu m = new Menu();
 		Scanner reader = new Scanner(s);

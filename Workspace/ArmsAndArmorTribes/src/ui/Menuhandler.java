@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import ui.menus.Menu_MainMenu;
+import ui.menus.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -20,7 +20,8 @@ public class Menuhandler {
 	}
 	
 	public static void loadMenus(){
-		menus.put("MENU_mainmenu", new Menu_MainMenu());
+		menus.put("DEFAULT_testmenu", new Menu_testMenu());
+		menus.put("MENU_mainmenu", new Menu_mainMenu());
 		//loadMenusFromFolder();
 		activeMenu = "MENU_mainmenu";
 	}

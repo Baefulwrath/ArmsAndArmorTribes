@@ -102,5 +102,9 @@ public abstract class Renderer {
     	for(int i = 0; i < m.imageButtons.size(); i++){
             m.imageButtons.get(i).draw(Renderinghandler.batch, m.OPACITY);
     	}
+    	if(m.RENDERTITLE){
+    		drawString(m.TITLE, m.TITLEX, m.TITLEY, UIAssethandler.titleLabelStyle, m.OPACITY);
+    		drawString("----------------", m.TITLEX, m.TITLEY - 16, UIAssethandler.titleLabelStyle, m.OPACITY);
+    	}
     }
 }

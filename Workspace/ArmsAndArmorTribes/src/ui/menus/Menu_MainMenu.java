@@ -1,6 +1,8 @@
 package ui.menus;
 
 import render.UIAssethandler;
+import arms.State;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -12,19 +14,26 @@ import editor.Editorhandler;
 
 import ui.Menu;
 
-public class Menu_MainMenu extends Menu{
+public class Menu_mainMenu extends Menu{
+	
+	public Menu_mainMenu(){
+		set("MENU_mainmenu", "Main Menu", State.MENU, 1.0f, true, -300, 200);
+	}
 	
 	@Override
 	public void setup(){
-        Label l1 = new Label("LABELTEST", UIAssethandler.messageLabelStyle);
-        l1.setPosition(0, 0);
-		labels.add(l1);
-		Image img1 = new Image(new TextureRegion(Editorhandler.brush.getClimateSprite()));
-		img1.setBounds(0, -100, 64, 64);
-		images.add(img1);
-		TextButton tb1 = new TextButton("test textButton", UIAssethandler.basicTextbuttonStyle);
-		tb1.setBounds(0, 100, 150, 32);
+		TextButton tb1 = new TextButton("Play", UIAssethandler.basicTextbuttonStyle);
+		tb1.setBounds(-250, 120, 150, 32);
 		textButtons.add(tb1);
+		TextButton tb2 = new TextButton("Options", UIAssethandler.basicTextbuttonStyle);
+		tb2.setBounds(-250, 80, 150, 32);
+		textButtons.add(tb2);
+		TextButton tb3 = new TextButton("Editor", UIAssethandler.basicTextbuttonStyle);
+		tb3.setBounds(-250, 40, 150, 32);
+		textButtons.add(tb3);
+		TextButton tb4 = new TextButton("Exit", UIAssethandler.basicTextbuttonStyle);
+		tb4.setBounds(-250, 0, 150, 32);
+		textButtons.add(tb4);
 	}
 	
 }

@@ -48,6 +48,8 @@ public class Renderinghandler {
 	}
 	
 	public static void setupRenderers(){
+		Default_Renderer defaultRenderer = new Default_Renderer();
+		renderers.put(DEFAULT, defaultRenderer);
 		Menu_Renderer menuRenderer = new Menu_Renderer();
 		renderers.put(MENU, menuRenderer);
 		Game_Renderer gameRenderer = new Game_Renderer();
