@@ -1,0 +1,8 @@
+title Arms and Armor
+useGL20 false
+width 1280
+height 800
+resizable false
+fullscreen false
+getSystemRes true
+startupState MENU

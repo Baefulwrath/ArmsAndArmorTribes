@@ -23,6 +23,9 @@ public class Inputhandler implements InputProcessor {
 			case PAGE_UP:
 				Renderinghandler.zoomIn = true;
 				break;
+			case ESCAPE:
+				AAAT.exitProgram = true;
+				break;
 		}
 		if(AAAT.state == EDITOR){
 			switch(keycode){

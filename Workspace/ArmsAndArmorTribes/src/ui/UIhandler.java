@@ -1,17 +1,25 @@
 package ui;
 
+import input.Buttonlistener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import scripting.Scripthandler;
 import ui.menus.*;
+
+import arms.State;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
-public class Menuhandler {
+import arms.AAAT;
+
+public class UIhandler {
 	public static HashMap<String, Menu> menus = new HashMap<String, Menu>();
 	public static String activeMenu = "";
+	public static Buttonlistener BL = new Buttonlistener();
 	
 	public static void update(){
     	for(Map.Entry<String, Menu> entry : menus.entrySet()){
@@ -20,10 +28,19 @@ public class Menuhandler {
 	}
 	
 	public static void loadMenus(){
-		menus.put("DEFAULT_testmenu", new Menu_testMenu());
-		menus.put("MENU_mainmenu", new Menu_mainMenu());
+		menus.put("DEFAULT_testmenu", new Menu_TestMenu());
+		menus.put("MENU_mainmenu", new Menu_MainMenu());
 		//loadMenusFromFolder();
-		activeMenu = "MENU_mainmenu";
+		resetActiveMenu(AAAT.state);
+	}
+	
+	public static void resetActiveMenu(State s){
+    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
+    		if(menus.get(entry.getKey()).STATE == s){
+    			activeMenu = entry.getKey();
+    			break;
+    		}
+    	}
 	}
 	
 	private static void loadMenusFromFolder(){
@@ -50,8 +67,16 @@ public class Menuhandler {
         }
 	}
 	
+	public static Button getActiveButton(){
+		return new Button("", "print_GetActiveButtonÄrEjFärdigskriven", null);
+	}
+	
 	public static Menu getMenu(){
 		return menus.get(activeMenu);
+	}
+	
+	public static void clickEvent(){
+		Scripthandler.handleScript(getActiveButton().script);
 	}
 	
 }

@@ -3,7 +3,7 @@ package arms;
 import input.Inputhandler;
 import render.UIAssethandler;
 import render.Renderinghandler;
-import ui.Menuhandler;
+import ui.UIhandler;
 import world.Worldhandler;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -17,7 +17,12 @@ public class AAAT implements ApplicationListener {
 	private static long lastRender = 0;
 	private static long renderInterval = 5;
     public static int fps = 120;
-    public static State state = MENU;
+    public static State state = DEFAULT;
+    public static boolean exitProgram = false;
+    
+    public AAAT(State startupState){
+    	state = startupState;
+    }
 	
 	@Override
 	public void create() {
@@ -25,7 +30,7 @@ public class AAAT implements ApplicationListener {
 		Worldhandler.load();
 		Editorhandler.setup();
 		Inputhandler inputhandler = new Inputhandler();
-		Menuhandler.loadMenus();
+		UIhandler.loadMenus();
 		input.setInputProcessor(inputhandler);
 	}
 
@@ -37,26 +42,30 @@ public class AAAT implements ApplicationListener {
 
 	@Override
 	public void render(){
-		try{
-			Thread.sleep(2);
-			switch(state){
-				case DEFAULT:
-					break;
-				case MENU:
-					break;
-				case EDITOR:
-					Editorhandler.update();
-					break;
-				case GAME:
-					Worldhandler.update();
-					break;
+		if(!exitProgram){
+			try{
+				Thread.sleep(2);
+				switch(state){
+					case DEFAULT:
+						break;
+					case MENU:
+						break;
+					case EDITOR:
+						Editorhandler.update();
+						break;
+					case GAME:
+						Worldhandler.update();
+						break;
+				}
+				UIhandler.update();
+				if(readyToRender()){
+					Renderinghandler.render();
+				}
+			}catch(Exception ex){
+				ex.printStackTrace(System.out);
 			}
-			Menuhandler.update();
-			if(readyToRender()){
-				Renderinghandler.render();
-			}
-		}catch(Exception ex){
-			ex.printStackTrace(System.out);
+		}else{
+			exit();
 		}
 	}
 	
@@ -80,5 +89,10 @@ public class AAAT implements ApplicationListener {
 
 	@Override
 	public void resume() {
+	}
+	
+	public void exit(){
+		dispose();
+		System.exit(0);
 	}
 }
