@@ -15,8 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 public class Menu {
 	public ArrayList<Label> labels = new ArrayList<Label>();
 	public ArrayList<Image> images = new ArrayList<Image>();
-	public ArrayList<TextButton> textButtons = new ArrayList<TextButton>();
-	public ArrayList<ImageButton> imageButtons = new ArrayList<ImageButton>();
+	public ArrayList<Button> buttons = new ArrayList<Button>();
 	public State STATE = State.DEFAULT;
 	public String ID = "";
 	public String TITLE = "";
@@ -24,26 +23,42 @@ public class Menu {
 	public boolean RENDERTITLE = false;
 	public int TITLEX = 0;
 	public int TITLEY = 0;
+	public int ACTIVETB = 0;
+	public boolean RENDERACTIVETB = false;
 	
 	public void update(){
+		testActiveButton();
 		clear();
 		setup();
+		for(int i = 0; i < buttons.size(); i++){
+			buttons.get(i).HOVER = false;
+		}
+		buttons.get(ACTIVETB).HOVER = true;
 	}
+	
 	public void clear(){
 		labels.clear();
 		images.clear();
-		textButtons.clear();
-		imageButtons.clear();
+		buttons.clear();
+	}
+	
+	public void testActiveButton(){
+		if(ACTIVETB < 0){
+			ACTIVETB = buttons.size() - 1;
+		}else if(ACTIVETB > buttons.size() - 1){
+			ACTIVETB = 0;
+		}
 	}
 	
 	public void setup(){}
 	
-	public void set(String id, String title, State state, float opacity, boolean renderTitle, int titleX, int titleY){
+	public void set(String id, String title, State state, float opacity, boolean renderTitle, boolean renderActiveButton, int titleX, int titleY){
 		ID = id;
 		TITLE = title;
 		STATE = state;
 		OPACITY = opacity;
 		RENDERTITLE = renderTitle;
+		RENDERACTIVETB = renderActiveButton;
 		TITLEX = titleX;
 		TITLEY = titleY;
 	}

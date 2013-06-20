@@ -19,6 +19,8 @@ public class AAAT implements ApplicationListener {
     public static int fps = 120;
     public static State state = DEFAULT;
     public static boolean exitProgram = false;
+    public static boolean gamePaused = false;
+    public static boolean editorPaused = false;
     
     public AAAT(State startupState){
     	state = startupState;

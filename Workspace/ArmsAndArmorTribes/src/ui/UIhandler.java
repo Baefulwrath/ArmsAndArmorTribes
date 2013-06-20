@@ -1,7 +1,5 @@
 package ui;
 
-import input.Buttonlistener;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +17,7 @@ import arms.AAAT;
 public class UIhandler {
 	public static HashMap<String, Menu> menus = new HashMap<String, Menu>();
 	public static String activeMenu = "";
-	public static Buttonlistener BL = new Buttonlistener();
+	public static boolean buttonJustActivated = false;
 	
 	public static void update(){
     	for(Map.Entry<String, Menu> entry : menus.entrySet()){
@@ -67,16 +65,24 @@ public class UIhandler {
         }
 	}
 	
-	public static Button getActiveButton(){
-		return new Button("", "print_GetActiveButtonÄrEjFärdigskriven", null);
-	}
-	
 	public static Menu getMenu(){
 		return menus.get(activeMenu);
 	}
 	
-	public static void clickEvent(){
-		Scripthandler.handleScript(getActiveButton().script);
+	public static void activateButton(){
+		if(!buttonJustActivated){
+			buttonJustActivated = true;
+	    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
+	    		Menu m = menus.get(entry.getKey());
+	    		m.update();
+	    		for(int i = 0; i < m.buttons.size(); i++){
+	    			Button b = m.buttons.get(i);
+	    			if(b.HOVER){
+	    				Scripthandler.handleScript(b.SCRIPT);
+	    			}
+	    		}
+	    	}
+		}
 	}
 	
 }

@@ -2,10 +2,12 @@ package input;
 
 import java.awt.Rectangle;
 import render.Renderinghandler;
+import ui.UIhandler;
 import world.Worldhandler;
 import static com.badlogic.gdx.Input.Keys.*;
 import arms.AAAT;
 import static arms.State.*;
+import arms.State;
 import com.badlogic.gdx.InputProcessor;
 import editor.Editorhandler;
 
@@ -28,40 +30,90 @@ public class Inputhandler implements InputProcessor {
 				break;
 		}
 		if(AAAT.state == EDITOR){
-			switch(keycode){
+			if(AAAT.editorPaused){
+				switch(keycode){
 				case DOWN:
-					Editorhandler.moveUp = true;
+					UIhandler.getMenu().ACTIVETB++;
 					break;
 				case UP:
-					Editorhandler.moveDown = true;
+					UIhandler.getMenu().ACTIVETB--;
 					break;
-				case LEFT:
-					Editorhandler.moveRight = true;
+				case SPACE:
+					UIhandler.activateButton();
 					break;
-				case RIGHT:
-					Editorhandler.moveLeft = true;
+				case ENTER:
+					UIhandler.activateButton();
 					break;
+				}
+			}else{
+				switch(keycode){
+					case DOWN:
+						Editorhandler.moveUp = true;
+						break;
+					case UP:
+						Editorhandler.moveDown = true;
+						break;
+					case LEFT:
+						Editorhandler.moveRight = true;
+						break;
+					case RIGHT:
+						Editorhandler.moveLeft = true;
+						break;
+				}
 			}
 		}else if(AAAT.state == GAME){
-			switch(keycode){
+			if(AAAT.gamePaused){
+				switch(keycode){
 				case DOWN:
-					Worldhandler.moveUp = true;
+					UIhandler.getMenu().ACTIVETB++;
 					break;
 				case UP:
-					Worldhandler.moveDown = true;
+					UIhandler.getMenu().ACTIVETB--;
 					break;
-				case LEFT:
-					Worldhandler.moveRight = true;
+				case SPACE:
+					UIhandler.activateButton();
 					break;
-				case RIGHT:
-					Worldhandler.moveLeft = true;
+				case ENTER:
+					UIhandler.activateButton();
 					break;
+				}
+			}else{
+				switch(keycode){
+					case DOWN:
+						Worldhandler.moveUp = true;
+						break;
+					case UP:
+						Worldhandler.moveDown = true;
+						break;
+					case LEFT:
+						Worldhandler.moveRight = true;
+						break;
+					case RIGHT:
+						Worldhandler.moveLeft = true;
+						break;
+				}
+			}
+		}else if(AAAT.state == State.MENU){
+			switch(keycode){
+			case DOWN:
+				UIhandler.getMenu().ACTIVETB++;
+				break;
+			case UP:
+				UIhandler.getMenu().ACTIVETB--;
+				break;
+			case SPACE:
+				UIhandler.activateButton();
+				break;
+			case ENTER:
+				UIhandler.activateButton();
+				break;
 			}
 		}
 		return false;
 	}
 	@Override
 	public boolean keyUp(int keycode) {
+		UIhandler.buttonJustActivated = false;
 		switch(keycode){
 			case PAGE_DOWN:
 				Renderinghandler.zoomOut = false;

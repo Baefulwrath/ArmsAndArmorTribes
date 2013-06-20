@@ -16,7 +16,7 @@ import ui.UIhandler;
 public class Menu_TestMenu extends Menu{
 	
 	public Menu_TestMenu(){
-		set("DEFAULT_testmenu", "Test Menu", State.DEFAULT, 1.0f, true, 0, 0);
+		set("DEFAULT_testmenu", "Test Menu", State.DEFAULT, 1.0f, true, true, 0, 0);
 	}
 	
 	@Override
@@ -27,10 +27,9 @@ public class Menu_TestMenu extends Menu{
 		Image img1 = new Image(new TextureRegion(Editorhandler.brush.getClimateSprite()));
 		img1.setBounds(0, -100, 64, 64);
 		images.add(img1);
-		Button tb1 = new Button("test textButton", "", UIAssethandler.basicTextbuttonStyle);
+		Button tb1 = new Button("test textButton", "", UIAssethandler.basicTextbuttonStyle, UIAssethandler.basicLabelStyle);
 		tb1.setBounds(0, 100, 150, 32);
-		tb1.addListener(UIhandler.BL);
-		textButtons.add(tb1);
+		buttons.add(tb1);
 	}
 	
 }

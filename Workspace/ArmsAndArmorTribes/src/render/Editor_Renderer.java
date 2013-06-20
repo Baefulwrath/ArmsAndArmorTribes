@@ -27,6 +27,7 @@ public class Editor_Renderer extends Renderer {
 
 	@Override
 	public void staticRender() {
+		drawCell(Editorhandler.brush, 0, 0);
 		if(Editorhandler.paused){
 			drawMenu(UIhandler.getMenu());
 		}
