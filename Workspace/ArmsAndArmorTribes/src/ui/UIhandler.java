@@ -17,7 +17,6 @@ import arms.AAAT;
 public class UIhandler {
 	public static HashMap<String, Menu> menus = new HashMap<String, Menu>();
 	public static String activeMenu = "";
-	public static boolean buttonJustActivated = false;
 	
 	public static void update(){
     	for(Map.Entry<String, Menu> entry : menus.entrySet()){
@@ -70,18 +69,53 @@ public class UIhandler {
 	}
 	
 	public static void activateButton(){
-		if(!buttonJustActivated){
-			buttonJustActivated = true;
-	    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-	    		Menu m = menus.get(entry.getKey());
-	    		m.update();
-	    		for(int i = 0; i < m.buttons.size(); i++){
-	    			Button b = m.buttons.get(i);
-	    			if(b.HOVER){
-	    				Scripthandler.handleScript(b.SCRIPT);
-	    			}
-	    		}
-	    	}
+    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
+	   		Menu m = menus.get(entry.getKey());
+	   		m.update();
+	   		for(int i = 0; i < m.buttons.size(); i++){
+	    		if(m.buttons.get(i).HOVER){
+	    			m.buttons.get(i).ACTIVE = true;
+	   			}else{
+	    			m.buttons.get(i).ACTIVE = false;
+	   			}
+	  		}
+	    }
+	}
+	
+	public static void reset(){
+    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
+    		Menu m = menus.get(entry.getKey());
+    		if(m.MAIN && m.STATE == AAAT.state){
+    			activeMenu = entry.getKey();
+    			break;
+    		}
+		}
+	}
+
+	public static void unblockAll() {
+    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
+    		Menu m = menus.get(entry.getKey());
+    		for(int i = 0; i < m.buttons.size(); i++){
+    			m.buttons.get(i).unblock();
+    		}
+		}
+	}
+
+	public static void blockAll() {
+    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
+    		Menu m = menus.get(entry.getKey());
+    		for(int i = 0; i < m.buttons.size(); i++){
+    			m.buttons.get(i).block();
+    		}
+		}
+	}
+
+	public static void deactivateAll() {
+    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
+    		Menu m = menus.get(entry.getKey());
+    		for(int i = 0; i < m.buttons.size(); i++){
+    			m.buttons.get(i).ACTIVE = false;
+    		}
 		}
 	}
 	

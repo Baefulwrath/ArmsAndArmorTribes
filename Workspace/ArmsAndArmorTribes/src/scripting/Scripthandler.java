@@ -45,7 +45,7 @@ public class Scripthandler {
         }
         activateScript(script);
 
-        //System.out.println(script);
+        System.out.println(script);
     }
 
     public static void activateScript(String script) {
@@ -121,7 +121,7 @@ public class Scripthandler {
     }
 
 	private static void setState(String s) {
-		AAAT.state = State.parseState(s);
+		AAAT.changeState(s);
 	}
 
 	private static void openMenu(String id) {

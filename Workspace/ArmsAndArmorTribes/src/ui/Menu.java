@@ -3,7 +3,7 @@ package ui;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import render.UIAssethandler;
+import render.Assethandler;
 
 import arms.State;
 
@@ -17,6 +17,7 @@ public class Menu {
 	public ArrayList<Image> images = new ArrayList<Image>();
 	public ArrayList<Button> buttons = new ArrayList<Button>();
 	public State STATE = State.DEFAULT;
+	public boolean MAIN = false;
 	public String ID = "";
 	public String TITLE = "";
 	public float OPACITY = 1.0f;
@@ -34,6 +35,9 @@ public class Menu {
 			buttons.get(i).HOVER = false;
 		}
 		buttons.get(ACTIVETB).HOVER = true;
+		for(int i = 0; i < buttons.size(); i++){
+			buttons.get(i).update();
+		}
 	}
 	
 	public void clear(){
@@ -52,10 +56,11 @@ public class Menu {
 	
 	public void setup(){}
 	
-	public void set(String id, String title, State state, float opacity, boolean renderTitle, boolean renderActiveButton, int titleX, int titleY){
+	public void set(String id, String title, State state, boolean main, float opacity, boolean renderTitle, boolean renderActiveButton, int titleX, int titleY){
 		ID = id;
 		TITLE = title;
 		STATE = state;
+		MAIN = main;
 		OPACITY = opacity;
 		RENDERTITLE = renderTitle;
 		RENDERACTIVETB = renderActiveButton;
@@ -105,7 +110,7 @@ public class Menu {
 		int x = Integer.parseInt(reader.nextLine());
 		int y = Integer.parseInt(reader.nextLine());
 		Color color = Color.valueOf(reader.nextLine());
-		BitmapFont font = UIAssethandler.parseFont(reader.nextLine());
+		BitmapFont font = Assethandler.parseFont(reader.nextLine());
         LabelStyle style = new LabelStyle(font, color);
 		Label l = new Label(text, style);
         l.setPosition(x, y);
