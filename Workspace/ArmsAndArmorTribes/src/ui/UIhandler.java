@@ -69,20 +69,6 @@ public class UIhandler {
 	}
 	
 	public static void activateButton(){
-<<<<<<< HEAD
-		if(!buttonJustActivated){
-			buttonJustActivated = true;
-	    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-	    		Menu m = menus.get(entry.getKey());
-	    		m.update();
-	    		for(int i = 0; i < m.buttons.size(); i++){
-	    			Button b = m.buttons.get(i);
-	    			if(b.HOVER){
-	    				b.activate();
-	    			}
-	    		}
-	    	}
-=======
     	for(Map.Entry<String, Menu> entry : menus.entrySet()){
 	   		Menu m = menus.get(entry.getKey());
 	   		m.update();
@@ -130,7 +116,6 @@ public class UIhandler {
     		for(int i = 0; i < m.buttons.size(); i++){
     			m.buttons.get(i).ACTIVE = false;
     		}
->>>>>>> 01e4ed344755e25614f4f935ece973b2258c55c2
 		}
 	}
 	

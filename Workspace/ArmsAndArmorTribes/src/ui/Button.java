@@ -5,11 +5,7 @@ import java.awt.Rectangle;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-<<<<<<< HEAD
-import render.UIAssethandler;
-=======
 import render.Assethandler;
->>>>>>> 01e4ed344755e25614f4f935ece973b2258c55c2
 import scripting.Scripthandler;
 
 public class Button {

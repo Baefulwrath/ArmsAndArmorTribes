@@ -1,21 +1,14 @@
 package render;
 
-<<<<<<< HEAD:Workspace/ArmsAndArmorTribes/src/render/UIAssethandler.java
 import java.util.HashMap;
-=======
 import ui.ButtonStyle;
->>>>>>> 01e4ed344755e25614f4f935ece973b2258c55c2:Workspace/ArmsAndArmorTribes/src/render/Assethandler.java
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 public class Assethandler {
 	
@@ -49,21 +42,12 @@ public class Assethandler {
             com16_BI = new BitmapFont(Gdx.files.internal("data/fonts/com16_BI.fnt"), Gdx.files.internal("data/fonts/com16_BI.png"), false, false);
             com10_BI = new BitmapFont(Gdx.files.internal("data/fonts/com10_BI.fnt"), Gdx.files.internal("data/fonts/com10_BI.png"), false, false);
 
-<<<<<<< HEAD:Workspace/ArmsAndArmorTribes/src/render/UIAssethandler.java
-            messageLabelStyle = new LabelStyle(UIAssethandler.com10, Color.CYAN);
-            logoLabelStyle = new LabelStyle(UIAssethandler.com64, Color.WHITE);
-            debugLabelStyle = new LabelStyle(UIAssethandler.com10, Color.RED);
-            titleLabelStyle = new LabelStyle(UIAssethandler.com32_BI, Color.WHITE);
-            basicLabelStyle = new LabelStyle(UIAssethandler.com10, Color.WHITE);
+            messageLabelStyle = new LabelStyle(com10, Color.CYAN);
+            logoLabelStyle = new LabelStyle(com64, Color.WHITE);
+            debugLabelStyle = new LabelStyle(com10, Color.RED);
+            titleLabelStyle = new LabelStyle(com32_BI, Color.WHITE);
+            basicLabelStyle = new LabelStyle(com10, Color.WHITE);
         	
-        	TextureAtlas basicSkinAtlas = new TextureAtlas(Gdx.files.internal("data/fonts/basicButton.pack"));
-        	basicSkin = new Skin(basicSkinAtlas);
-        	basicTextbuttonStyle = new TextButtonStyle();
-        	basicTextbuttonStyle.up = basicSkin.getDrawable("basicButtonUp");
-        	basicTextbuttonStyle.down = basicSkin.getDrawable("basicButtonDown");
-        	basicTextbuttonStyle.font = com10;
-        	
-=======
             messageLabelStyle = new LabelStyle(Assethandler.com10, Color.CYAN);
             logoLabelStyle = new LabelStyle(Assethandler.com64, Color.WHITE);
             debugLabelStyle = new LabelStyle(Assethandler.com10, Color.RED);
@@ -75,7 +59,6 @@ public class Assethandler {
             basicButton_d = parsePatch(Gdx.files.internal("data/images/ninepatches/basicButton_d_p.txt").readString(), new Texture(Gdx.files.internal("data/images/ninepatches/basicButton_d.png")));
             
             basicButtonStyle = new ButtonStyle(basicButton_u, basicButton_h, basicButton_d, basicLabelStyle);
->>>>>>> 01e4ed344755e25614f4f935ece973b2258c55c2:Workspace/ArmsAndArmorTribes/src/render/Assethandler.java
     	}catch(Exception ex){
     		ex.printStackTrace(System.out);
     	}
