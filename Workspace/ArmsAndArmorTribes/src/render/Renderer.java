@@ -1,8 +1,11 @@
 package render;
 
+import java.awt.Rectangle;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -13,7 +16,7 @@ import ui.Menu;
 import world.Cell;
 import world.GameMap;
 import world.Worldhandler;
-import static render.UIAssethandler.*;
+import static render.Assethandler.*;
 
 public abstract class Renderer {
 	public Renderer(String id){
@@ -94,6 +97,16 @@ public abstract class Renderer {
         lab.draw(Renderinghandler.batch, opacity);
     }
     
+    public void drawNinePatch(NinePatch img, float x, float y, float width, float height){
+    	img.getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+    	img.draw(Renderinghandler.batch, x, y, width, height);
+    }
+    
+    public void drawNinePatch(NinePatch img, Rectangle box){
+    	img.getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+    	img.draw(Renderinghandler.batch, box.x, box.y, box.width, box.height);
+    }
+    
     public void drawMenu(Menu m){
     	for(int i = 0; i < m.labels.size(); i++){
             m.labels.get(i).draw(Renderinghandler.batch, m.OPACITY);
@@ -102,16 +115,13 @@ public abstract class Renderer {
             m.images.get(i).draw(Renderinghandler.batch, m.OPACITY);
     	}
     	for(int i = 0; i < m.buttons.size(); i++){
-            m.buttons.get(i).draw(Renderinghandler.batch, m.OPACITY);
-    	}
-    	if(m.RENDERACTIVETB){
-    		Button b = m.buttons.get(m.ACTIVETB);
-    		drawString("<", b.getX() - 10, b.getY() + (b.getHeight() / 2), b.LABELSTYLE, m.OPACITY);
-    		drawString("=====>", b.getX() + b.getWidth() + 5, b.getY() + (b.getHeight() / 2), b.LABELSTYLE, m.OPACITY);
+    		Button b = m.buttons.get(i);
+    		drawNinePatch(b.getTex(), b.BOX);
+    		drawString(b.TITLE + " - " + b.SCRIPT, b.BOX.x + b.TITLEX, b.BOX.y + b.getTextY(), b.STYLE.LABELSTYLE, 1.0f);
     	}
     	if(m.RENDERTITLE){
-    		drawString(m.TITLE, m.TITLEX, m.TITLEY, UIAssethandler.titleLabelStyle, m.OPACITY);
-    		drawString("----------------", m.TITLEX, m.TITLEY - 16, UIAssethandler.titleLabelStyle, m.OPACITY);
+    		drawString(m.TITLE, m.TITLEX, m.TITLEY, Assethandler.titleLabelStyle, m.OPACITY);
+    		drawString("----------------", m.TITLEX, m.TITLEY - 16, Assethandler.titleLabelStyle, m.OPACITY);
     	}
     }
 }

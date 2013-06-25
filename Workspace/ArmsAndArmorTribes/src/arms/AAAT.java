@@ -1,7 +1,7 @@
 package arms;
 
 import input.Inputhandler;
-import render.UIAssethandler;
+import render.Assethandler;
 import render.Renderinghandler;
 import ui.UIhandler;
 import world.Worldhandler;
@@ -39,7 +39,8 @@ public class AAAT implements ApplicationListener {
 	@Override
 	public void dispose() {
 		Renderinghandler.dispose();
-		UIAssethandler.dispose();
+		Assethandler.dispose();
+		UIhandler.reset();
 	}
 
 	@Override
@@ -96,5 +97,15 @@ public class AAAT implements ApplicationListener {
 	public void exit(){
 		dispose();
 		System.exit(0);
+	}
+	
+	public static void changeState(State s){
+		state = s;
+		UIhandler.reset();
+	}
+	
+	public static void changeState(String s){
+		state = State.parseState(s);
+		UIhandler.reset();
 	}
 }

@@ -12,10 +12,10 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class Main {
 	public static void main(String[] args) {
-		Toolkit toolkit =  Toolkit.getDefaultToolkit();
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		loadStartupSettings(cfg);
 		if(cfg.fullscreen && getSystemRes){
+			Toolkit toolkit =  Toolkit.getDefaultToolkit();
 			Dimension dim = toolkit.getScreenSize();
 			cfg.width = dim.width;
 			cfg.height = dim.height;

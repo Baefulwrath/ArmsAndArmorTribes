@@ -113,7 +113,7 @@ public class Inputhandler implements InputProcessor {
 	}
 	@Override
 	public boolean keyUp(int keycode) {
-		UIhandler.buttonJustActivated = false;
+		UIhandler.deactivateAll();
 		switch(keycode){
 			case PAGE_DOWN:
 				Renderinghandler.zoomOut = false;

@@ -1,6 +1,8 @@
 package ui.menus;
 
-import render.UIAssethandler;
+import java.awt.Rectangle;
+
+import render.Assethandler;
 import arms.State;
 
 import ui.Button;
@@ -9,23 +11,15 @@ import ui.Menu;
 public class Menu_MainMenu extends Menu{
 	
 	public Menu_MainMenu(){
-		set("MENU_mainmenu", "Main Menu", State.MENU, 1.0f, true, true, -300, 200);
+		set("MENU_mainmenu", "Main Menu", State.MENU, true, 1.0f, true, true, -300, 200);
 	}
 	
 	@Override
 	public void setup(){
-		Button tb1 = new Button("Play", "setState_GAME", UIAssethandler.basicTextbuttonStyle, UIAssethandler.basicLabelStyle);
-		tb1.setBounds(-250, 120, 150, 32);
-		buttons.add(tb1);
-		Button tb2 = new Button("Options", "print_Not Yet Implemented", UIAssethandler.basicTextbuttonStyle, UIAssethandler.basicLabelStyle);
-		tb2.setBounds(-250, 80, 150, 32);
-		buttons.add(tb2);
-		Button tb3 = new Button("Editor", "setState_EDITOR", UIAssethandler.basicTextbuttonStyle, UIAssethandler.basicLabelStyle);
-		tb3.setBounds(-250, 40, 150, 32);
-		buttons.add(tb3);
-		Button tb4 = new Button("Exit", "exit_", UIAssethandler.basicTextbuttonStyle, UIAssethandler.basicLabelStyle);
-		tb4.setBounds(-250, 0, 150, 32);
-		buttons.add(tb4);
+		buttons.add(new Button("Play", "setState_GAME", new Rectangle(-250, 120, 150, 32), Assethandler.basicButtonStyle));
+		buttons.add(new Button("Options", "print_Unavailable!", new Rectangle(-250, 80, 150, 32), Assethandler.basicButtonStyle));
+		buttons.add(new Button("Editor", "setState_EDITOR", new Rectangle(-250, 40, 150, 32), Assethandler.basicButtonStyle));
+		buttons.add(new Button("Exit", "exit_", new Rectangle(-250, 0, 150, 32), Assethandler.basicButtonStyle));
 	}
 	
 }
