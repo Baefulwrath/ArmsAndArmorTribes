@@ -152,9 +152,15 @@ public class Menu {
 		return temp;
 	}
 
-	public void clearReadyToActivate() {
+	public void process() {
 		for(int i = 0; i < buttons.size(); i++){
-			buttons.get(i).readytoActivate = false;
+			buttons.get(i).activate();
+		}
+	}
+
+	public void systemUpdate(boolean active) {
+		for(int i = 0; i < buttons.size(); i++){
+			buttons.get(i).systemUpdate(active);
 		}
 	}
 }

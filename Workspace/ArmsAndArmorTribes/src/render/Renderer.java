@@ -117,11 +117,7 @@ public abstract class Renderer {
     	for(int i = 0; i < m.buttons.size(); i++){
     		Button b = m.buttons.get(i);
     		drawNinePatch(b.getTex(), b.BOX);
-    		String deb = "";
-    		if(b.readytoActivate){
-    			deb += "-||";
-    		}
-    		drawString(b.TITLE + " - " + b.SCRIPT, b.BOX.x + b.TITLEX, b.BOX.y + b.getTextY(), b.STYLE.LABELSTYLE, 1.0f);
+    		drawString(b.TITLE + " - " + b.SCRIPT + " - " + b.ACTIVE + " - " + b.HOVER, b.BOX.x + b.TITLEX, b.BOX.y + b.getTextY(), b.STYLE.LABELSTYLE, 1.0f);
     	}
     	if(m.RENDERTITLE){
     		drawString(m.TITLE, m.TITLEX, m.TITLEY, Assethandler.titleLabelStyle, m.OPACITY);

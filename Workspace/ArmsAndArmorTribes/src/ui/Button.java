@@ -19,7 +19,6 @@ public class Button {
 	public ButtonStyle STYLE;
 	public Rectangle BOX = new Rectangle();
 	public int TITLEX = 16;
-	public boolean readytoActivate = false;
 
 	public Button(String text, String buttonScript, Rectangle locdim, ButtonStyle style) {
 		TITLE = text;
@@ -29,17 +28,6 @@ public class Button {
 	}
 	
 	public void update(boolean active){
-		if(intersects(Inputhandler.staticMouse) && active){
-			HOVER = true;
-		}else{
-			HOVER = false;
-		}
-		if(ACTIVE && HOVER){
-			readytoActivate = true;
-		}else if(readytoActivate && HOVER){
-			activate();
-			readytoActivate = false;
-		}
 	}
 	
 	public boolean intersects(Rectangle r) {
@@ -56,7 +44,7 @@ public class Button {
 	
 	public NinePatch getTex(){
 		NinePatch n;
-		if(ACTIVE){
+		if(ACTIVE && HOVER){
 			n = STYLE.DOWN;
 		}else if(HOVER){
 			n = STYLE.HOVER;
@@ -72,7 +60,18 @@ public class Button {
 	}
 	
 	public void activate(){
-		Scripthandler.handleScript(SCRIPT);
+		if(ACTIVE && HOVER){
+			Scripthandler.handleScript(SCRIPT);
+		}
+		ACTIVE = false;
+	}
+
+	public void systemUpdate(boolean active) {
+		if(intersects(Inputhandler.staticMouse) && active){
+			HOVER = true;
+		}else{
+			HOVER = false;
+		}
 	}
 	
 }

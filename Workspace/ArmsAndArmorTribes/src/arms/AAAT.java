@@ -15,9 +15,6 @@ import static com.badlogic.gdx.Gdx.*;
 import editor.Editorhandler;
 
 public class AAAT implements ApplicationListener {
-	private static long lastRender = 0;
-	private static long renderInterval = 5;
-    public static int fps = 120;
     public static State state = DEFAULT;
     public static boolean exitProgram = false;
     public static boolean gamePaused = false;
@@ -33,7 +30,7 @@ public class AAAT implements ApplicationListener {
 		Worldhandler.load();
 		Editorhandler.setup();
 		Inputhandler inputhandler = new Inputhandler();
-		UIhandler.loadMenus();
+		UIhandler.setup();
 		Scripthandler.setup();
 		input.setInputProcessor(inputhandler);
 	}
@@ -64,25 +61,13 @@ public class AAAT implements ApplicationListener {
 				}
 				Scripthandler.update();
 				UIhandler.update();
-				if(readyToRender()){
-					Renderinghandler.render();
-				}
+				Renderinghandler.render();
 			}catch(Exception ex){
 				ex.printStackTrace(System.out);
 			}
 		}else{
 			exit();
 		}
-	}
-	
-	public boolean readyToRender(){
-		boolean temp = false;
-		renderInterval = 1000 / fps;
-		if(lastRender + renderInterval <= System.currentTimeMillis()){
-			temp = true;
-			lastRender = System.currentTimeMillis();
-		}
-		return temp;
 	}
 
 	@Override

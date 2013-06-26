@@ -20,13 +20,24 @@ public class UIhandler {
 	public static String activeMenu = "";
     private static long lastUpdate = 0;
     private static int updateInterval = 20;
+    
+    public static void setup(){
+    	loadMenus();
+    	updateMenus();
+    }
 	
 	public static void update(){
 		if(readyToUpdate()){
 	    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-	    		menus.get(entry.getKey()).update(getIfActiveMenu(entry.getKey()));
+	    		menus.get(entry.getKey()).systemUpdate(getIfActiveMenu(entry.getKey()));
 	    	}
 		}
+	}
+	
+	public static void updateMenus(){
+    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
+    		menus.get(entry.getKey()).update(getIfActiveMenu(entry.getKey()));
+    	}
 	}
     
     public static boolean readyToUpdate(){
@@ -86,13 +97,9 @@ public class UIhandler {
     	for(Map.Entry<String, Menu> entry : menus.entrySet()){
 	   		Menu m = menus.get(entry.getKey());
 	   		for(int i = 0; i < m.buttons.size(); i++){
-	    		if(m.buttons.get(i).HOVER){
-	    			m.buttons.get(i).ACTIVE = true;
-	   			}else{
-	    			m.buttons.get(i).ACTIVE = false;
-	   			}
+	    		m.buttons.get(i).ACTIVE = true;
 	  		}
-	   		m.update(getIfActiveMenu(entry.getKey()));
+	   		update();
 	    }
 	}
 	
@@ -124,11 +131,11 @@ public class UIhandler {
 		}
 	}
 
-	public static void clearReadyToActivate() {
+	public static void process() {
     	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-    		menus.get(entry.getKey()).clearReadyToActivate();
+    		menus.get(entry.getKey()).process();
     	}
-		
+   		updateMenus();
 	}
 	
 }

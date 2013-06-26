@@ -147,6 +147,7 @@ public class Inputhandler implements InputProcessor {
 			case DEFAULT:
 				break;
 			case MENU:
+				UIhandler.activateButton();
 				break;
 			case EDITOR:
 				Editorhandler.painting = true;
@@ -156,15 +157,15 @@ public class Inputhandler implements InputProcessor {
 		}
 		return false;
 	}
+	
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		UIhandler.clearReadyToActivate();
 		updateMouse(screenX, screenY);
+		UIhandler.process();
 		switch(AAAT.state){
 			case DEFAULT:
 				break;
 			case MENU:
-				UIhandler.activateButton();
 				break;
 			case EDITOR:
 				Editorhandler.painting = false;

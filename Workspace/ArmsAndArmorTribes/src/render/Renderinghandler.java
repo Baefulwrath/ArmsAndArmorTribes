@@ -34,8 +34,9 @@ public class Renderinghandler {
 	public static float drawOpacity = 1;
 	public static boolean zoomIn = false;
 	public static boolean zoomOut = false;
-    private static long lastRender = 0;
-    private static int renderInterval = 2;
+	private static long lastRender = 0;
+	private static long renderInterval = 5;
+    public static int fps = 120;
     public static Sprite testImg;
 	
 	public static void setup(){
@@ -68,15 +69,16 @@ public class Renderinghandler {
 			staticRender();
 		}
 	}
-    
-    public static boolean readyToRender(){
-    	boolean temp = false;
-    	if(lastRender + renderInterval <= System.currentTimeMillis()){
-    		temp = true;
-    		lastRender = System.currentTimeMillis();
-    	}
-    	return temp;
-    }
+	
+	public static boolean readyToRender(){
+		boolean temp = false;
+		renderInterval = 1000 / fps;
+		if(lastRender + renderInterval <= System.currentTimeMillis()){
+			temp = true;
+			lastRender = System.currentTimeMillis();
+		}
+		return temp;
+	}
 	
 	public static void mobileRender(){
 		camera.zoom = zoom;
