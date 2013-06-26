@@ -23,13 +23,9 @@ public class Menu_TestMenu extends Menu{
 	
 	@Override
 	public void setup(){
-        Label l1 = new Label("LABELTEST", Assethandler.messageLabelStyle);
-        l1.setPosition(-200, 50);
-		labels.add(l1);
-		Image img1 = new Image(new TextureRegion(Editorhandler.brush.getClimateSprite()));
-		img1.setBounds(0, -100, 64, 64);
-		images.add(img1);
-		buttons.add(new Button("Test Button", "", new Rectangle(0, 100, 150, 32), Assethandler.basicButtonStyle));
+		addLabel("LABELTEST", Assethandler.messageLabelStyle, -200, 50);
+		addImage(Editorhandler.brush.getClimateSprite(), 0, -100, 64, 64);
+		addButton("Test Button", "", 0, 100, 150, 32, Assethandler.basicButtonStyle);
 	}
 	
 }

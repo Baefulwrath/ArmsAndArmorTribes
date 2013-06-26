@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,7 +9,10 @@ import render.Assethandler;
 import arms.State;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
@@ -24,19 +28,15 @@ public class Menu {
 	public boolean RENDERTITLE = false;
 	public int TITLEX = 0;
 	public int TITLEY = 0;
-	public int ACTIVETB = 0;
+	private int ACTIVETB = 0;
 	public boolean RENDERACTIVETB = false;
 	
-	public void update(){
+	public void update(boolean active){
 		testActiveButton();
 		clear();
 		setup();
 		for(int i = 0; i < buttons.size(); i++){
-			buttons.get(i).HOVER = false;
-		}
-		buttons.get(ACTIVETB).HOVER = true;
-		for(int i = 0; i < buttons.size(); i++){
-			buttons.get(i).update();
+			buttons.get(i).update(active);
 		}
 	}
 	
@@ -116,5 +116,45 @@ public class Menu {
         l.setPosition(x, y);
 		reader.close();
         return l;
+	}
+	
+	public void addLabel(String text, LabelStyle style, int x, int y){
+		Label l = new Label(text, style);
+		l.setPosition(x, y);
+		labels.add(l);
+	}
+	
+	public void addImage(TextureRegion r, int x, int y, int w, int h){
+		addImage(new Sprite(r), x, y, w, h);
+	}
+	
+	public void addImage(Texture t, int x, int y, int w, int h){
+		addImage(new Sprite(t), x, y, w, h);
+	}
+	
+	public void addImage(Sprite s, int x, int y, int w, int h){
+		Image i = new Image(s);
+		i.setBounds(x, y, w, h);
+		images.add(i);
+	}
+	
+	public void addButton(String text, String script, int x, int y, int w, int h, ButtonStyle bs){
+		buttons.add(new Button(text, script, new Rectangle(x, y, w, h), bs));
+	}
+	
+	public boolean intersects(Rectangle r){
+		boolean temp = false;
+		for(int i = 0; i < buttons.size(); i++){
+			if(buttons.get(i).intersects(r)){
+				temp = true;
+			}
+		}
+		return temp;
+	}
+
+	public void clearReadyToActivate() {
+		for(int i = 0; i < buttons.size(); i++){
+			buttons.get(i).readytoActivate = false;
+		}
 	}
 }

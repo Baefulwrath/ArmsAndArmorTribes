@@ -31,10 +31,11 @@ public class Renderinghandler {
 	public static float zoomMax = graphics.getWidth() * 4;
 	public static float zoomMin = graphics.getWidth() / 4;
 	public static float zoomSpeed = 32;
+	public static float drawOpacity = 1;
 	public static boolean zoomIn = false;
 	public static boolean zoomOut = false;
-	
-    
+    private static long lastRender = 0;
+    private static int renderInterval = 2;
     public static Sprite testImg;
 	
 	public static void setup(){
@@ -59,12 +60,23 @@ public class Renderinghandler {
 	}
 	
 	public static void render(){
-		zoomIn();
-		zoomOut();
-		newFrame();
-		mobileRender();
-		staticRender();
+		if(readyToRender()){
+			zoomIn();
+			zoomOut();
+			newFrame();
+			mobileRender();
+			staticRender();
+		}
 	}
+    
+    public static boolean readyToRender(){
+    	boolean temp = false;
+    	if(lastRender + renderInterval <= System.currentTimeMillis()){
+    		temp = true;
+    		lastRender = System.currentTimeMillis();
+    	}
+    	return temp;
+    }
 	
 	public static void mobileRender(){
 		camera.zoom = zoom;

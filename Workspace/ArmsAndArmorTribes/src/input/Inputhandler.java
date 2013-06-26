@@ -32,12 +32,6 @@ public class Inputhandler implements InputProcessor {
 		if(AAAT.state == EDITOR){
 			if(AAAT.editorPaused){
 				switch(keycode){
-				case DOWN:
-					UIhandler.getMenu().ACTIVETB++;
-					break;
-				case UP:
-					UIhandler.getMenu().ACTIVETB--;
-					break;
 				case SPACE:
 					UIhandler.activateButton();
 					break;
@@ -64,12 +58,6 @@ public class Inputhandler implements InputProcessor {
 		}else if(AAAT.state == GAME){
 			if(AAAT.gamePaused){
 				switch(keycode){
-				case DOWN:
-					UIhandler.getMenu().ACTIVETB++;
-					break;
-				case UP:
-					UIhandler.getMenu().ACTIVETB--;
-					break;
 				case SPACE:
 					UIhandler.activateButton();
 					break;
@@ -95,12 +83,6 @@ public class Inputhandler implements InputProcessor {
 			}
 		}else if(AAAT.state == State.MENU){
 			switch(keycode){
-			case DOWN:
-				UIhandler.getMenu().ACTIVETB++;
-				break;
-			case UP:
-				UIhandler.getMenu().ACTIVETB--;
-				break;
 			case SPACE:
 				UIhandler.activateButton();
 				break;
@@ -113,7 +95,6 @@ public class Inputhandler implements InputProcessor {
 	}
 	@Override
 	public boolean keyUp(int keycode) {
-		UIhandler.deactivateAll();
 		switch(keycode){
 			case PAGE_DOWN:
 				Renderinghandler.zoomOut = false;
@@ -177,11 +158,13 @@ public class Inputhandler implements InputProcessor {
 	}
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		UIhandler.clearReadyToActivate();
 		updateMouse(screenX, screenY);
 		switch(AAAT.state){
 			case DEFAULT:
 				break;
 			case MENU:
+				UIhandler.activateButton();
 				break;
 			case EDITOR:
 				Editorhandler.painting = false;

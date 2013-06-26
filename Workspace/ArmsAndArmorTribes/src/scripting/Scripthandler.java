@@ -2,6 +2,7 @@ package scripting;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import ui.UIhandler;
@@ -14,51 +15,74 @@ public class Scripthandler {
     private static BufferedReader reader = new BufferedReader(inputStreamReader);
     private static boolean initialized = false;
     private static HashMap<String, Integer> genInts = new HashMap<String, Integer>();
+    private static ArrayList<String> lines = new ArrayList<String>();
+    private static long lastUpdate = 0;
+    private static int updateInterval = 1;
     
-    public static void initialize(){
+    public static void setup(){
     	loadGenericVariables();
     	initialized = true;
     }
     
     public static void update() {
         try {
-            if (reader.ready()) {
-                handleScript(reader.readLine());
-            }
+        	if(readyToUpdate()){
+	            if (reader.ready()) {
+	                handleScript(reader.readLine());
+	            }
+	            if(lines.size() > 0){
+	            	readLine(lines.get(0));
+	            	lines.remove(0);
+	            }
+        	}
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+    
+    public static boolean readyToUpdate(){
+    	boolean temp = false;
+    	if(lastUpdate + updateInterval <= System.currentTimeMillis()){
+    		temp = true;
+    		lastUpdate = System.currentTimeMillis();
+    	}
+    	return temp;
     }
     
     public static void loadGenericVariables(){
     }
 
     public static void handleScript(String script) {
-        // Ta bort kommentarer, mellanrum o.s.v
-        script = cleanupScript(script);
-        // Kolla efter metoder såsom GET_ och fyll i variabler.
-        script = fillScript(script);
-        // Loopa igenom olika kommandon och utför dem.
-        while (script.contains("#")) {
-            activateScript(script);
-            script = script.substring(script.indexOf("#") + 1);
-        }
-        activateScript(script);
-
+    	if(initialized){
+	        // Ta bort kommentarer, mellanrum o.s.v
+	        script = cleanupScript(script);
+	        // Kolla efter metoder såsom GET_ och fyll i variabler.
+	        script = fillScript(script);
+	        // Loopa igenom olika kommandon och utför dem.
+	        while (script.contains("#")) {
+	            activateScript(script);
+	            script = script.substring(script.indexOf("#") + 1);
+	        }
+	        activateScript(script);
+    	}
         System.out.println(script);
+    }
+    
+    public static void addLine(String line){
+    	lines.add(line);
     }
 
     public static void activateScript(String script) {
         if (script.length() > 0) {
             if (script.length() > 1) {
                 if (script.contains("#")) {
-                    readLine(script.substring(0, script.indexOf("#")));
+                	addLine(script.substring(0, script.indexOf("#")));
                 } else {
-                    readLine(script);
+                	addLine(script);
                 }
             } else {
                 if (!script.contains("#")) {
-                    readLine(script);
+                	addLine(script);
                 }
             }
         }

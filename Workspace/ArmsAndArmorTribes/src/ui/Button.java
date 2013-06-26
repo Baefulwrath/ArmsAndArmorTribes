@@ -1,5 +1,7 @@
 package ui;
 
+import input.Inputhandler;
+
 import java.awt.Rectangle;
 
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -12,12 +14,12 @@ public class Button {
 	
 	public boolean HOVER = false;
 	public boolean ACTIVE = false;
-	public boolean BLOCKED = false;
 	public String TITLE = "";
 	public String SCRIPT = "";
 	public ButtonStyle STYLE;
 	public Rectangle BOX = new Rectangle();
 	public int TITLEX = 16;
+	public boolean readytoActivate = false;
 
 	public Button(String text, String buttonScript, Rectangle locdim, ButtonStyle style) {
 		TITLE = text;
@@ -26,22 +28,28 @@ public class Button {
 		STYLE = style;
 	}
 	
-	public void unblock(){
-		BLOCKED = false;
-	}
-	public void block(){
-		BLOCKED = true;
-	}
-	
-	public void update(){
-		if(ACTIVE && !BLOCKED){
-			Scripthandler.handleScript(SCRIPT);
-			block();
-		}else if(!ACTIVE){
-			unblock();
+	public void update(boolean active){
+		if(intersects(Inputhandler.staticMouse) && active){
+			HOVER = true;
+		}else{
+			HOVER = false;
+		}
+		if(ACTIVE && HOVER){
+			readytoActivate = true;
+		}else if(readytoActivate && HOVER){
+			activate();
+			readytoActivate = false;
 		}
 	}
 	
+	public boolean intersects(Rectangle r) {
+		boolean temp = false;
+		if(BOX.intersects(r)){
+			temp = true;
+		}
+		return temp;
+	}
+
 	public LabelStyle getLabelStyle(){
 		return STYLE.LABELSTYLE;
 	}

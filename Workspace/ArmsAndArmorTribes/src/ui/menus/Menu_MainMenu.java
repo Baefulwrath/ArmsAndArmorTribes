@@ -16,10 +16,10 @@ public class Menu_MainMenu extends Menu{
 	
 	@Override
 	public void setup(){
-		buttons.add(new Button("Play", "setState_GAME", new Rectangle(-250, 120, 150, 32), Assethandler.basicButtonStyle));
-		buttons.add(new Button("Options", "print_Unavailable!", new Rectangle(-250, 80, 150, 32), Assethandler.basicButtonStyle));
-		buttons.add(new Button("Editor", "setState_EDITOR", new Rectangle(-250, 40, 150, 32), Assethandler.basicButtonStyle));
-		buttons.add(new Button("Exit", "exit_", new Rectangle(-250, 0, 150, 32), Assethandler.basicButtonStyle));
+		addButton("Play", "setState_GAME", -250, 120, 150, 32, Assethandler.basicButtonStyle);
+		addButton("Options", "print_Unavailable!", -250, 80, 150, 32, Assethandler.basicButtonStyle);
+		addButton("Editor", "setState_EDITOR", -250, 40, 150, 32, Assethandler.basicButtonStyle);
+		addButton("Exit", "exit_", -250, 0, 150, 32, Assethandler.basicButtonStyle);
 	}
 	
 }

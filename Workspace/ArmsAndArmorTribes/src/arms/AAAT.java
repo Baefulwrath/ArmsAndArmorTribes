@@ -3,6 +3,7 @@ package arms;
 import input.Inputhandler;
 import render.Assethandler;
 import render.Renderinghandler;
+import scripting.Scripthandler;
 import ui.UIhandler;
 import world.Worldhandler;
 
@@ -33,6 +34,7 @@ public class AAAT implements ApplicationListener {
 		Editorhandler.setup();
 		Inputhandler inputhandler = new Inputhandler();
 		UIhandler.loadMenus();
+		Scripthandler.setup();
 		input.setInputProcessor(inputhandler);
 	}
 
@@ -47,7 +49,7 @@ public class AAAT implements ApplicationListener {
 	public void render(){
 		if(!exitProgram){
 			try{
-				Thread.sleep(2);
+				Thread.sleep(1);
 				switch(state){
 					case DEFAULT:
 						break;
@@ -60,6 +62,7 @@ public class AAAT implements ApplicationListener {
 						Worldhandler.update();
 						break;
 				}
+				Scripthandler.update();
 				UIhandler.update();
 				if(readyToRender()){
 					Renderinghandler.render();

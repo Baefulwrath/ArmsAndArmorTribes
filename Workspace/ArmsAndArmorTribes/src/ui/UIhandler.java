@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,12 +18,25 @@ import arms.AAAT;
 public class UIhandler {
 	public static HashMap<String, Menu> menus = new HashMap<String, Menu>();
 	public static String activeMenu = "";
+    private static long lastUpdate = 0;
+    private static int updateInterval = 20;
 	
 	public static void update(){
-    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-    		menus.get(entry.getKey()).update();
-    	}
+		if(readyToUpdate()){
+	    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
+	    		menus.get(entry.getKey()).update(getIfActiveMenu(entry.getKey()));
+	    	}
+		}
 	}
+    
+    public static boolean readyToUpdate(){
+    	boolean temp = false;
+    	if(lastUpdate + updateInterval <= System.currentTimeMillis()){
+    		temp = true;
+    		lastUpdate = System.currentTimeMillis();
+    	}
+    	return temp;
+    }
 	
 	public static void loadMenus(){
 		menus.put("DEFAULT_testmenu", new Menu_TestMenu());
@@ -71,7 +85,6 @@ public class UIhandler {
 	public static void activateButton(){
     	for(Map.Entry<String, Menu> entry : menus.entrySet()){
 	   		Menu m = menus.get(entry.getKey());
-	   		m.update();
 	   		for(int i = 0; i < m.buttons.size(); i++){
 	    		if(m.buttons.get(i).HOVER){
 	    			m.buttons.get(i).ACTIVE = true;
@@ -79,7 +92,26 @@ public class UIhandler {
 	    			m.buttons.get(i).ACTIVE = false;
 	   			}
 	  		}
+	   		m.update(getIfActiveMenu(entry.getKey()));
 	    }
+	}
+	
+	public static boolean getIfActiveMenu(String id){
+   		boolean active = false;
+   		if(id.equals(activeMenu)){
+   			active = true;
+   		}
+   		return active;
+	}
+	
+	public static boolean intersectsMenu(Rectangle r){
+		boolean temp = false;
+    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
+    		if(menus.get(entry.getKey()).intersects(r)){
+    			temp = true;
+    		}
+    	}
+    	return temp;
 	}
 	
 	public static void reset(){
@@ -92,31 +124,11 @@ public class UIhandler {
 		}
 	}
 
-	public static void unblockAll() {
+	public static void clearReadyToActivate() {
     	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-    		Menu m = menus.get(entry.getKey());
-    		for(int i = 0; i < m.buttons.size(); i++){
-    			m.buttons.get(i).unblock();
-    		}
-		}
-	}
-
-	public static void blockAll() {
-    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-    		Menu m = menus.get(entry.getKey());
-    		for(int i = 0; i < m.buttons.size(); i++){
-    			m.buttons.get(i).block();
-    		}
-		}
-	}
-
-	public static void deactivateAll() {
-    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-    		Menu m = menus.get(entry.getKey());
-    		for(int i = 0; i < m.buttons.size(); i++){
-    			m.buttons.get(i).ACTIVE = false;
-    		}
-		}
+    		menus.get(entry.getKey()).clearReadyToActivate();
+    	}
+		
 	}
 	
 }
