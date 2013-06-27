@@ -13,12 +13,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Worldhandler {
     public static ArrayList<GameMap> maps = new ArrayList<GameMap>();
-	public static HashMap<Integer, Sprite> terrainImages = new HashMap<Integer, Sprite>();
-	public static HashMap<Integer, Sprite> climateImages = new HashMap<Integer, Sprite>();
-    public static ArrayList<Terrain> terrains = new ArrayList<Terrain>();
-	public static ArrayList<Climate> climates = new ArrayList<Climate>();
-	public static Texture terrainmap;
-	public static Texture climatemap;
 	public static Sprite gridImg;
 	public static int activeMap = 0;
     public static int mapSpeedBase = 16;
@@ -44,10 +38,6 @@ public class Worldhandler {
 	}
     
     public static void load(){
-    	loadTerrains();
-    	loadClimates();
-    	loadTerrainImages();
-    	loadClimateImages();
     	loadMaps();
     	gridImg = new Sprite(new Texture(Gdx.files.internal("data/images/grid.png")));
     }
@@ -67,63 +57,6 @@ public class Worldhandler {
 	
     public static GameMap getMap(){
         return maps.get(activeMap);
-    }
-    
-    public static void loadTerrainImages(){
-    	try{
-    		terrainImages.clear();
-    		terrainmap = new Texture(Gdx.files.internal("data/images/terrainmap.png"));
-    		int length = terrainmap.getWidth() / hexDiameter;
-    		for(int i = 0; i < length; i++){
-    			TextureRegion img = new TextureRegion(terrainmap, hexDiameter * i, 0, hexDiameter, hexDiameter);
-    			Sprite sprite = new Sprite(img);
-    			terrainImages.put(i, sprite);
-    		}
-    	}catch(Exception ex){}
-    }
-    
-    public static void loadClimateImages(){
-    	try{
-    		climateImages.clear();
-    		climatemap = new Texture(Gdx.files.internal("data/images/climatemap.png"));
-    		int length = climatemap.getWidth() / hexDiameter;
-    		for(int i = 0; i < length; i++){
-    			TextureRegion img = new TextureRegion(climatemap, hexDiameter * i, 0, hexDiameter, hexDiameter);
-    			Sprite sprite = new Sprite(img);
-    			climateImages.put(i, sprite);
-    		}
-    	}catch(Exception ex){}
-    }
-    
-    public static void loadTerrains(){
-    	try{
-    		terrains.clear();
-    		Scanner reader = new Scanner(Gdx.files.internal("data/content/terrains.txt").readString());
-    		while(reader.hasNextLine()){
-    			reader.nextLine();
-    			String terrain = reader.nextLine();
-    			String climate = reader.nextLine();
-    			String title = reader.nextLine();
-    			int id = Integer.parseInt(reader.nextLine());
-    			terrains.add(new Terrain(terrain, climate, title, id));
-    		}
-    		reader.close();
-    	}catch(Exception ex){ex.printStackTrace();}
-    }
-    
-    public static void loadClimates(){
-    	try{
-    		climates.clear();
-    		Scanner reader = new Scanner(Gdx.files.internal("data/content/climates.txt").readString());
-    		while(reader.hasNextLine()){
-    			reader.nextLine();
-    			String climate = reader.nextLine();
-    			String title = reader.nextLine();
-    			int id = Integer.parseInt(reader.nextLine());
-    			climates.add(new Climate(climate, title, id));
-    		}
-    		reader.close();
-    	}catch(Exception ex){ex.printStackTrace();}
     }
     
 	public static boolean readyToMove(){
@@ -147,33 +80,6 @@ public class Worldhandler {
 			getMap().X += mapSpeed;
 		}
 	}
-    
-    public static int getClimateIdByTerrain(int terrain){
-    	int temp = 0;
-    	for(int i = 0; i < climates.size(); i++){
-    		if(terrains.get(terrain).CLIMATE.equals(climates.get(i).CLIMATE)){
-    			temp = i;
-    			break;
-    		}
-    	}
-    	return temp;
-    }
-    
-    public static Sprite getClimateImage(int id){
-    	if(climateImages.containsKey(id)){
-    		return climateImages.get(id);
-    	}else{
-    		return climateImages.get(0);
-    	}
-    }
-    
-    public static Sprite getTerrainImage(int id){
-    	if(terrainImages.containsKey(id)){
-    		return terrainImages.get(id);
-    	}else{
-    		return terrainImages.get(0);
-    	}
-    }
     
     public static int getCentralMapX(GameMap map){
         float x = - map.getWidth() / 2;

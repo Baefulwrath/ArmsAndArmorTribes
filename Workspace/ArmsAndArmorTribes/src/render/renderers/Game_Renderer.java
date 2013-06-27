@@ -1,17 +1,14 @@
-package render;
+package render.renderers;
 
-import ui.UIhandler;
+import render.Renderer;
 import world.Worldhandler;
 
 import com.badlogic.gdx.graphics.Color;
 
-import editor.Brush;
-import editor.Editorhandler;
+public class Game_Renderer extends Renderer {
 
-public class Default_Renderer extends Renderer {
-
-	public Default_Renderer() {
-		super("DEFAULT");
+	public Game_Renderer() {
+		super("GAME");
 	}
 
 	@Override
@@ -24,7 +21,6 @@ public class Default_Renderer extends Renderer {
 
 	@Override
 	public void staticRender() {
-		drawMenu(UIhandler.getMenu());
 	}
 
 }

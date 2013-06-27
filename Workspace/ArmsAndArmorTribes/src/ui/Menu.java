@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import render.Assethandler;
+import render.NinePatchImage;
+import render.Renderinghandler;
+import world.Cell;
 
 import arms.State;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -19,7 +23,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 public class Menu {
 	public ArrayList<Label> labels = new ArrayList<Label>();
 	public ArrayList<Image> images = new ArrayList<Image>();
+	public ArrayList<NinePatchImage> ninepatches = new ArrayList<NinePatchImage>();
 	public ArrayList<Button> buttons = new ArrayList<Button>();
+	public ArrayList<CellImage> cellImages = new ArrayList<CellImage>();
+	public ArrayList<Rectangle> collisionAreas = new ArrayList<Rectangle>();
 	public State STATE = State.DEFAULT;
 	public boolean MAIN = false;
 	public String ID = "";
@@ -43,7 +50,10 @@ public class Menu {
 	public void clear(){
 		labels.clear();
 		images.clear();
+		ninepatches.clear();
 		buttons.clear();
+		cellImages.clear();
+		collisionAreas.clear();
 	}
 	
 	public void testActiveButton(){
@@ -132,6 +142,15 @@ public class Menu {
 		addImage(new Sprite(t), x, y, w, h);
 	}
 	
+	public void addNinePatch(NinePatch n, int x, int y, int w, int h){
+		NinePatchImage npi = new NinePatchImage(n, x, y, w, h);
+		ninepatches.add(npi);
+	}
+	
+	public void addNinePatch(NinePatchImage n){
+		ninepatches.add(n);
+	}
+	
 	public void addImage(Sprite s, int x, int y, int w, int h){
 		Image i = new Image(s);
 		i.setBounds(x, y, w, h);
@@ -142,11 +161,28 @@ public class Menu {
 		buttons.add(new Button(text, script, new Rectangle(x, y, w, h), bs));
 	}
 	
+	public void addCellImage(Cell c, int x, int y, int w, int h){
+		cellImages.add(new CellImage(c.WIDTH, c.TERRAIN, c.CLIMATE, x, y, w, h));
+	}
+	
+	public void addCollisionArea(int x, int y, int w, int h){
+		collisionAreas.add(new Rectangle(x, y, w, h));
+	}
+	
 	public boolean intersects(Rectangle r){
 		boolean temp = false;
 		for(int i = 0; i < buttons.size(); i++){
 			if(buttons.get(i).intersects(r)){
 				temp = true;
+				break;
+			}
+		}
+		if(!temp){
+			for(int i = 0; i < collisionAreas.size(); i++){
+				if(collisionAreas.get(i).intersects(r)){
+					temp = true;
+					break;
+				}
 			}
 		}
 		return temp;
@@ -161,6 +197,20 @@ public class Menu {
 	public void systemUpdate(boolean active) {
 		for(int i = 0; i < buttons.size(); i++){
 			buttons.get(i).systemUpdate(active);
+		}
+	}
+	
+	public float getScreenX(){
+		return Renderinghandler.getScreenX();
+	}
+	
+	public float getScreenY(){
+		return Renderinghandler.getScreenY();
+	}
+
+	public void unhoverAll() {
+		for(int i = 0; i < buttons.size(); i++){
+			buttons.get(i).HOVER = false;
 		}
 	}
 }

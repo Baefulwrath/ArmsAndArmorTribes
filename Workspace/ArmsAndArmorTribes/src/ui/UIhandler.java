@@ -1,5 +1,7 @@
 package ui;
 
+import input.Inputhandler;
+
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +9,7 @@ import java.util.Map;
 
 import scripting.Scripthandler;
 import ui.menus.*;
+import ui.windows.*;
 
 import arms.State;
 
@@ -16,27 +19,68 @@ import com.badlogic.gdx.files.FileHandle;
 import arms.AAAT;
 
 public class UIhandler {
-	public static HashMap<String, Menu> menus = new HashMap<String, Menu>();
-	public static String activeMenu = "";
+	public static HashMap<String, Menu> mainMenus = new HashMap<String, Menu>();
+	public static HashMap<String, Menu> insideMenus = new HashMap<String, Menu>();
+	public static ArrayList<Message> messages = new ArrayList<Message>();
+	public static HashMap<String, Window> windows = new HashMap<String, Window>();
+	public static String activeMainMenu = "";
+	public static String activeWindow = "";
+	public static boolean showWindow = true;
     private static long lastUpdate = 0;
     private static int updateInterval = 20;
     
     public static void setup(){
-    	loadMenus();
+    	load();
     	updateMenus();
     }
 	
 	public static void update(){
 		if(readyToUpdate()){
-	    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-	    		menus.get(entry.getKey()).systemUpdate(getIfActiveMenu(entry.getKey()));
-	    	}
+			if(showWindow){
+			    for(Map.Entry<String, Window> entry : windows.entrySet()){
+			    	windows.get(entry.getKey()).update(getIfActiveMenu(entry.getKey(), true));
+			    	windows.get(entry.getKey()).systemUpdate(getIfActiveMenu(entry.getKey(), true));
+			   	}
+				unhoverAll();
+			}else{
+			    for(Map.Entry<String, Menu> entry : mainMenus.entrySet()){
+			   		mainMenus.get(entry.getKey()).systemUpdate(getIfActiveMenu(entry.getKey(), true));
+			   	}
+			   	for(Map.Entry<String, Menu> entry : insideMenus.entrySet()){
+			   		insideMenus.get(entry.getKey()).systemUpdate(getIfActiveMenu(entry.getKey(), false));
+		    	}
+			}
+	    	updateMessages();
 		}
 	}
 	
+	private static void unhoverAll() {
+    	for(Map.Entry<String, Menu> entry : mainMenus.entrySet()){
+    		mainMenus.get(entry.getKey()).unhoverAll();
+    	}
+    	for(Map.Entry<String, Menu> entry : insideMenus.entrySet()){
+    		insideMenus.get(entry.getKey()).unhoverAll();
+    	}
+	}
+
+	public static void updateMessages(){
+    	for(int i = 0; i < messages.size(); i++){
+    		Message m = messages.get(i);
+    		if(m.creationTime + m.LIFETIME <= System.currentTimeMillis()){
+    			//System.out.println("--<" + m.TEXT + ">--");
+    			messages.remove(i);
+    			updateMessages();
+    			break;
+    		}
+    	}
+	}
+	
 	public static void updateMenus(){
-    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-    		menus.get(entry.getKey()).update(getIfActiveMenu(entry.getKey()));
+    	for(Map.Entry<String, Menu> entry : mainMenus.entrySet()){
+    		mainMenus.get(entry.getKey()).update(getIfActiveMenu(entry.getKey(), true));
+    	}
+    	for(Map.Entry<String, Menu> entry : insideMenus.entrySet()){
+    		insideMenus.get(entry.getKey()).update(getIfActiveMenu(entry.getKey(), false));
     	}
 	}
     
@@ -49,17 +93,22 @@ public class UIhandler {
     	return temp;
     }
 	
-	public static void loadMenus(){
-		menus.put("DEFAULT_testmenu", new Menu_TestMenu());
-		menus.put("MENU_mainmenu", new Menu_MainMenu());
+	public static void load(){
+		mainMenus.put("DEFAULT_testmenu", new Menu_TestMenu());
+		mainMenus.put("MENU_mainmenu", new Menu_MainMenu());
+		
+		insideMenus.put("EDITOR_Hud", new Editor_Hud());
+		
+		windows.put("test", new Window_Test(-250, -100, 500, 200));
 		//loadMenusFromFolder();
+		activeWindow = "test";
 		resetActiveMenu(AAAT.state);
 	}
 	
 	public static void resetActiveMenu(State s){
-    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-    		if(menus.get(entry.getKey()).STATE == s){
-    			activeMenu = entry.getKey();
+    	for(Map.Entry<String, Menu> entry : mainMenus.entrySet()){
+    		if(mainMenus.get(entry.getKey()).STATE == s){
+    			activeMainMenu = entry.getKey();
     			break;
     		}
     	}
@@ -79,7 +128,7 @@ public class UIhandler {
                 if(file.extension().equals("txt")){
                 	String s = file.readString();
                     Menu m = Menu.parseMenu(s);
-                    menus.put(m.ID, m);
+                    mainMenus.put(m.ID, m);
                 }else{
                 	System.out.println("Non-txt in index of menus");
                 }
@@ -90,12 +139,40 @@ public class UIhandler {
 	}
 	
 	public static Menu getMenu(){
-		return menus.get(activeMenu);
+		return mainMenus.get(activeMainMenu);
 	}
 	
-	public static void activateButton(){
-    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-	   		Menu m = menus.get(entry.getKey());
+	public static Window getWindow(){
+		if(showWindow){
+			return windows.get(activeWindow);
+		}else{
+			return new Window(0, 0, 0, 0);
+		}
+	}
+	
+	public static ArrayList<Menu> getInsideMenus(){
+		ArrayList<Menu> m = new ArrayList<Menu>();
+    	for(Map.Entry<String, Menu> entry : insideMenus.entrySet()){
+			if(insideMenus.get(entry.getKey()).STATE == AAAT.state){
+				m.add(insideMenus.get(entry.getKey()));
+			}
+		}
+    	return m;
+	}
+	
+	public static ArrayList<Menu> getInsideMenus(State s){
+		ArrayList<Menu> m = new ArrayList<Menu>();
+    	for(Map.Entry<String, Menu> entry : insideMenus.entrySet()){
+			if(insideMenus.get(entry.getKey()).STATE == s){
+				m.add(insideMenus.get(entry.getKey()));
+			}
+		}
+    	return m;
+	}
+	
+	public static void activateMainButton(){
+    	for(Map.Entry<String, Menu> entry : mainMenus.entrySet()){
+	   		Menu m = mainMenus.get(entry.getKey());
 	   		for(int i = 0; i < m.buttons.size(); i++){
 	    		m.buttons.get(i).ACTIVE = true;
 	  		}
@@ -103,18 +180,52 @@ public class UIhandler {
 	    }
 	}
 	
-	public static boolean getIfActiveMenu(String id){
+	public static void activateInsideButton(){
+    	for(Map.Entry<String, Menu> entry : insideMenus.entrySet()){
+	   		Menu m = insideMenus.get(entry.getKey());
+	   		for(int i = 0; i < m.buttons.size(); i++){
+	    		m.buttons.get(i).ACTIVE = true;
+	  		}
+	   		update();
+	    }
+	}
+	
+	public static boolean getIfActiveMenu(String id, boolean main){
    		boolean active = false;
-   		if(id.equals(activeMenu)){
-   			active = true;
+   		if(main){
+	   		if(id.equals(activeMainMenu)){
+	   			active = true;
+	   		}
+   		}else{
+   			if(insideMenus.get(id).STATE == AAAT.state){
+   				active = true;
+   			}
    		}
    		return active;
 	}
 	
-	public static boolean intersectsMenu(Rectangle r){
+	public static boolean intersectsMenus(Rectangle r){
 		boolean temp = false;
-    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-    		if(menus.get(entry.getKey()).intersects(r)){
+		if(intersectsInsideMenus(r) || intersectsMainMenus(r)){
+			temp = true;
+		}
+    	return temp;
+	}
+	
+	public static boolean intersectsMainMenus(Rectangle r){
+		boolean temp = false;
+    	for(Map.Entry<String, Menu> entry : mainMenus.entrySet()){
+    		if(mainMenus.get(entry.getKey()).intersects(r)){
+    			temp = true;
+    		}
+    	}
+    	return temp;
+	}
+	
+	public static boolean intersectsInsideMenus(Rectangle r){
+		boolean temp = false;
+    	for(Map.Entry<String, Menu> entry : insideMenus.entrySet()){
+    		if(insideMenus.get(entry.getKey()).intersects(r)){
     			temp = true;
     		}
     	}
@@ -122,20 +233,33 @@ public class UIhandler {
 	}
 	
 	public static void reset(){
-    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-    		Menu m = menus.get(entry.getKey());
+    	for(Map.Entry<String, Menu> entry : mainMenus.entrySet()){
+    		Menu m = mainMenus.get(entry.getKey());
     		if(m.MAIN && m.STATE == AAAT.state){
-    			activeMenu = entry.getKey();
+    			activeMainMenu = entry.getKey();
     			break;
     		}
 		}
 	}
 
 	public static void process() {
-    	for(Map.Entry<String, Menu> entry : menus.entrySet()){
-    		menus.get(entry.getKey()).process();
-    	}
+	    for(Map.Entry<String, Menu> entry : mainMenus.entrySet()){
+	    	mainMenus.get(entry.getKey()).process();
+	    }
+	    for(Map.Entry<String, Menu> entry : insideMenus.entrySet()){
+	    	insideMenus.get(entry.getKey()).process();
+	    }
    		updateMenus();
+	}
+	
+	public static void print(String s){
+		System.out.println(s);
+		messages.add(new Message(s, 4000));
+	}
+	
+	public static void print(String s, int time){
+		System.out.println(s);
+		messages.add(new Message(s, time));
 	}
 	
 }

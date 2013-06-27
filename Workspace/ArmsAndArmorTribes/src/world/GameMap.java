@@ -1,6 +1,8 @@
 package world;
 
 import java.util.Scanner;
+
+import render.Assethandler;
 import render.Renderinghandler;
 import com.badlogic.gdx.Gdx;
 
@@ -29,7 +31,7 @@ public class GameMap {
 			int cy = Integer.parseInt(reader.nextLine());
 			int width = Integer.parseInt(reader.nextLine());
 			int ter = Integer.parseInt(reader.nextLine());
-			int cli = Worldhandler.getClimateIdByTerrain(ter);
+			int cli = Assethandler.getClimateIdByTerrain(ter);
 			CELLS[cx][cy] = new Cell(hexWidth, hexDiameter, ter, cli);
     	}
     	X = Worldhandler.getCentralMapX(this);

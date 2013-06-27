@@ -3,6 +3,7 @@ package editor;
 import render.Renderinghandler;
 import arms.*;
 import input.Inputhandler;
+import ui.UIhandler;
 import world.Cell;
 import world.GameMap;
 import world.Worldhandler;
@@ -46,6 +47,9 @@ public class Editorhandler {
 		if(painting && AAAT.state == State.EDITOR){
 			allowed = true;
 		}
+		if(UIhandler.intersectsInsideMenus(Inputhandler.staticMouse)){
+			allowed = false;
+		}
 		return allowed;
 	}
 	
@@ -79,5 +83,9 @@ public class Editorhandler {
 		}else if(moveRight){
 			map.X += mapSpeed;
 		}
+	}
+
+	public static void changeBrushClimate() {
+		
 	}
 }

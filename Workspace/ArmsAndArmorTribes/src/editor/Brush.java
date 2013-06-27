@@ -2,8 +2,11 @@ package editor;
 
 import java.awt.Rectangle;
 
+import render.Assethandler;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import world.Cell;
@@ -12,8 +15,8 @@ import world.Worldhandler;
 public class Brush extends Cell{
 
 	public Rectangle BOX = new Rectangle();
-	public int size = 100;
-	public Sprite sprite = new Sprite();
+	public int size = 128;
+	public NinePatch img;
 	
 	public Brush(int width, int diameter, int terrain, int climate) {
 		super(width, diameter, terrain, climate);
@@ -26,7 +29,7 @@ public class Brush extends Cell{
 	}
 	
 	public void loadImg(){
-		sprite = new Sprite(new Texture(Gdx.files.internal("data/images/brush.png")));
+		img = Assethandler.brushImg;
 	}
 	
 	public void update(int x, int y){
@@ -34,11 +37,11 @@ public class Brush extends Cell{
 	}
 	
 	public Sprite getClimateSprite(){
-		return Worldhandler.getClimateImage(CLIMATE);
+		return Assethandler.getClimateImage(CLIMATE);
 	}
 	
 	public Sprite getTerrainSprite(){
-		return Worldhandler.getTerrainImage(TERRAIN);
+		return Assethandler.getTerrainImage(TERRAIN);
 	}
 	
 }

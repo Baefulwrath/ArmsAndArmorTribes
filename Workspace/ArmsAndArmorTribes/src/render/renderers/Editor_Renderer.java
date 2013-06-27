@@ -1,5 +1,6 @@
-package render;
+package render.renderers;
 
+import render.Renderer;
 import ui.UIhandler;
 import world.Worldhandler;
 
@@ -22,12 +23,12 @@ public class Editor_Renderer extends Renderer {
 	public void mobileRender() {
 		Brush brush = Editorhandler.brush;
 		drawMap(Editorhandler.map);
-		drawImage(brush.sprite, brush.BOX.x, brush.BOX.y, brush.BOX.width, brush.BOX.height, 0, false, Color.WHITE, 0.5f, false);
+		drawNinePatch(brush.img, brush.BOX, Color.WHITE);
 	}
 
 	@Override
 	public void staticRender() {
-		drawCell(Editorhandler.brush, 0, 0);
+		drawMenus(UIhandler.getInsideMenus());
 		if(Editorhandler.paused){
 			drawMenu(UIhandler.getMenu());
 		}

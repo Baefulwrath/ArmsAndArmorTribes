@@ -1,14 +1,18 @@
-package render;
+package render.renderers;
 
+import render.Renderer;
 import ui.UIhandler;
 import world.Worldhandler;
 
 import com.badlogic.gdx.graphics.Color;
 
-public class Menu_Renderer extends Renderer {
+import editor.Brush;
+import editor.Editorhandler;
 
-	public Menu_Renderer() {
-		super("MENU");
+public class Default_Renderer extends Renderer {
+
+	public Default_Renderer() {
+		super("DEFAULT");
 	}
 
 	@Override

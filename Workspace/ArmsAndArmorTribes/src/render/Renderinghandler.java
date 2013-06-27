@@ -6,6 +6,11 @@ import static com.badlogic.gdx.Gdx.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import render.renderers.Default_Renderer;
+import render.renderers.Editor_Renderer;
+import render.renderers.Game_Renderer;
+import render.renderers.Menu_Renderer;
+
 import world.GameMap;
 
 import static com.badlogic.gdx.graphics.GL10.*;

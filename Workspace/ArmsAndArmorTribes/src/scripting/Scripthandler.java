@@ -5,6 +5,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import editor.Editorhandler;
+
 import ui.UIhandler;
 
 import arms.AAAT;
@@ -65,7 +67,7 @@ public class Scripthandler {
 	        }
 	        activateScript(script);
     	}
-        System.out.println(script);
+        //System.out.println(script);
     }
     
     public static void addLine(String line){
@@ -134,12 +136,17 @@ public class Scripthandler {
         }
         if (line.length() > 6) {
             if (cmd.equals("print_")) {
-                System.out.println(line.substring(6));
+            	UIhandler.print(line.substring(6));
             }
         }
         if (line.length() > 9) {
             if (cmd.equals("setState_")) {
                 setState(line.substring(9));
+            }
+        }
+        if (line.length() > 19) {
+            if (cmd.equals("changeBrushClimate_")) {
+            	Editorhandler.changeBrushClimate();
             }
         }
     }
@@ -149,6 +156,6 @@ public class Scripthandler {
 	}
 
 	private static void openMenu(String id) {
-		UIhandler.activeMenu = id;
+		UIhandler.activeMainMenu = id;
 	}
 }
