@@ -6,14 +6,19 @@ import ui.WindowType;
 
 public class Window_Test extends Window{
 
-	public Window_Test(int x, int y, int w, int h) {
-		super(x, y, w, h);
-		set("Test Message", "Test Title", WindowType.DEFAULT);
+	public Window_Test(int x, int y, int w, int h, String id) {
+		super(x, y, w, h, id);
+		setWindow("Test Message", "Test Title", "", WindowType.DEFAULT);
 	}
 	
 	@Override
 	public void setup(){
-		addButton("test", "", 0, 0, 100, 50, Assethandler.basicButtonStyle);
+		addButton("test", "print_test", 0, 0, 100, 50, Assethandler.basicButtonStyle);
+	}
+	
+	@Override
+	public void setupActivation(){
+		SCRIPT = "print_" + INPUT;
 	}
 
 }

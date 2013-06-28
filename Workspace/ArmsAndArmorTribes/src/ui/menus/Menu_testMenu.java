@@ -17,8 +17,9 @@ import ui.UIhandler;
 
 public class Menu_TestMenu extends Menu{
 	
-	public Menu_TestMenu(){
-		set("DEFAULT_testmenu", "Test Menu", State.DEFAULT, true, 1.0f, true, true, 0, 0);
+	public Menu_TestMenu(String id){
+		super(id);
+		set("Test Menu", State.DEFAULT, true, 1.0f, true, true, 0, 0);
 	}
 	
 	@Override

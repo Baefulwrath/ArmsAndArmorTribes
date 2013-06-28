@@ -25,21 +25,21 @@ public class UIhandler {
 	public static HashMap<String, Window> windows = new HashMap<String, Window>();
 	public static String activeMainMenu = "";
 	public static String activeWindow = "";
-	public static boolean showWindow = true;
+	public static boolean showWindow = false;
     private static long lastUpdate = 0;
     private static int updateInterval = 20;
     
     public static void setup(){
     	load();
     	updateMenus();
+    	updateWindows();
     }
 	
 	public static void update(){
 		if(readyToUpdate()){
 			if(showWindow){
 			    for(Map.Entry<String, Window> entry : windows.entrySet()){
-			    	windows.get(entry.getKey()).update(getIfActiveMenu(entry.getKey(), true));
-			    	windows.get(entry.getKey()).systemUpdate(getIfActiveMenu(entry.getKey(), true));
+			    	windows.get(entry.getKey()).systemUpdate(true);
 			   	}
 				unhoverAll();
 			}else{
@@ -83,6 +83,12 @@ public class UIhandler {
     		insideMenus.get(entry.getKey()).update(getIfActiveMenu(entry.getKey(), false));
     	}
 	}
+	
+	public static void updateWindows(){
+	    for(Map.Entry<String, Window> entry : windows.entrySet()){
+	    	windows.get(entry.getKey()).update(true);
+	   	}
+	}
     
     public static boolean readyToUpdate(){
     	boolean temp = false;
@@ -94,12 +100,14 @@ public class UIhandler {
     }
 	
 	public static void load(){
-		mainMenus.put("DEFAULT_testmenu", new Menu_TestMenu());
-		mainMenus.put("MENU_mainmenu", new Menu_MainMenu());
+		mainMenus.put("DEFAULT_testmenu", new Menu_TestMenu("DEFAULT_testmenu"));
+		mainMenus.put("MENU_mainmenu", new Menu_MainMenu("MENU_mainmenu"));
 		
-		insideMenus.put("EDITOR_Hud", new Editor_Hud());
+		insideMenus.put("EDITOR_Hud", new Editor_Hud("EDITOR_Hud"));
 		
-		windows.put("test", new Window_Test(-250, -100, 500, 200));
+		windows.put("test", new Window_Test(-250, -100, 500, 200, "test"));
+		windows.put("changebrushclimate", new Window_ChangeBrushClimate(-250, -100, 500, 200, "changebrushclimate"));
+		windows.put("changebrushterrain", new Window_ChangeBrushTerrain(-250, -100, 500, 200, "changebrushterrain"));
 		//loadMenusFromFolder();
 		activeWindow = "test";
 		resetActiveMenu(AAAT.state);
@@ -146,7 +154,15 @@ public class UIhandler {
 		if(showWindow){
 			return windows.get(activeWindow);
 		}else{
-			return new Window(0, 0, 0, 0);
+			return new Window(0, 0, 0, 0, "NOID");
+		}
+	}
+	
+	public static Window getWindow(String id){
+		if(showWindow){
+			return windows.get(id);
+		}else{
+			return new Window(0, 0, 0, 0, "NOID");
 		}
 	}
 	
@@ -186,6 +202,17 @@ public class UIhandler {
 	   		for(int i = 0; i < m.buttons.size(); i++){
 	    		m.buttons.get(i).ACTIVE = true;
 	  		}
+	   		update();
+	    }
+	}
+	
+	public static void activateWindowButton(){
+    	for(Map.Entry<String, Window> entry : windows.entrySet()){
+	   		Window m = windows.get(entry.getKey());
+	   		for(int i = 0; i < m.buttons.size(); i++){
+	    		m.buttons.get(i).ACTIVE = true;
+	  		}
+	   		m.NEXT.ACTIVE = true;
 	   		update();
 	    }
 	}
@@ -250,6 +277,16 @@ public class UIhandler {
 	    	insideMenus.get(entry.getKey()).process();
 	    }
    		updateMenus();
+	}
+
+	public static void processWindow() {
+	    for(Map.Entry<String, Window> entry : windows.entrySet()){
+	    	if(windows.get(entry.getKey()).process()){
+	    	    showWindow = false;
+	    	    break;
+	    	}
+	    }
+	    updateWindows();
 	}
 	
 	public static void print(String s){

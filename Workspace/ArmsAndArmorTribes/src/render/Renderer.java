@@ -136,9 +136,7 @@ public abstract class Renderer {
     		m.ninepatches.get(i).draw(Renderinghandler.batch);
     	}
     	for(int i = 0; i < m.buttons.size(); i++){
-    		Button b = m.buttons.get(i);
-    		drawNinePatch(b.getTex(), b.BOX, Color.WHITE);
-    		drawString(b.TITLE, b.BOX.x + b.TITLEX, b.BOX.y + b.getTextY(), b.STYLE.LABELSTYLE, 1.0f);
+    		drawButton(m.buttons.get(i));
     	}
     	for(int i = 0; i < m.cellImages.size(); i++){
     		CellImage c = m.cellImages.get(i);
@@ -148,6 +146,11 @@ public abstract class Renderer {
     		drawString(m.TITLE, m.TITLEX, m.TITLEY, Assethandler.titleLabelStyle, m.OPACITY);
     		drawString("----------------", m.TITLEX, m.TITLEY - 16, Assethandler.titleLabelStyle, m.OPACITY);
     	}
+    }
+    
+    public void drawButton(Button b){
+		drawNinePatch(b.getTex(), b.BOX, Color.WHITE);
+		drawString(b.TITLE, b.BOX.x + b.TITLEX, b.BOX.y + b.getTextY(), b.STYLE.LABELSTYLE, 1.0f);
     }
     
     public void drawMenus(ArrayList<Menu> m){
@@ -169,11 +172,14 @@ public abstract class Renderer {
     
     public void drawWindow(Window w){
     	drawNinePatch(windowPatch, w.BOX, w.getTint());
+    	drawNinePatch(windowPatch, w.BOX.x + 20, w.getInputY() - (int) (basicLabelStyle.font.getCapHeight() * 1.5), w.BOX.width - 40, basicLabelStyle.font.getCapHeight() * 2, w.getTint());
     	if(w.closable()){
     		drawImage(basicExitButton, w.BOX.x + w.BOX.width - 16, w.BOX.y + w.BOX.height - 16, 16, 16, 0, false, Color.WHITE, 1.0f, false);
     	}
     	drawString(w.MESSAGE, w.BOX.x + 20, w.getMessageY(), w.getLabelStyle(), 1.0f);
     	drawString(w.TITLE, w.BOX.x + 6, w.BOX.y + w.BOX.height - w.getLabelStyle().font.getCapHeight(), w.getLabelStyle(), 1.0f);
+    	drawString(w.INPUT, w.BOX.x + 20, w.getInputY(), basicLabelStyle, 1.0f);
     	drawMenu(w);
+    	drawButton(w.NEXT);
     }
 }

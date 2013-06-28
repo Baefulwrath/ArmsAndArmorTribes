@@ -10,8 +10,9 @@ import ui.Menu;
 
 public class Menu_MainMenu extends Menu{
 	
-	public Menu_MainMenu(){
-		set("MENU_mainmenu", "Main Menu", State.MENU, true, 1.0f, true, true, -300, 200);
+	public Menu_MainMenu(String id){
+		super(id);
+		set("Main Menu", State.MENU, true, 1.0f, true, true, -300, 200);
 	}
 	
 	@Override

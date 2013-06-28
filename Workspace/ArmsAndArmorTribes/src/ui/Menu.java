@@ -37,6 +37,11 @@ public class Menu {
 	public int TITLEY = 0;
 	private int ACTIVETB = 0;
 	public boolean RENDERACTIVETB = false;
+	public Button NEXT = new Button("", "", new Rectangle(), Assethandler.basicButtonStyle);
+	
+	public Menu(String id){
+		ID = id;
+	}
 	
 	public void update(boolean active){
 		testActiveButton();
@@ -45,6 +50,7 @@ public class Menu {
 		for(int i = 0; i < buttons.size(); i++){
 			buttons.get(i).update(active);
 		}
+		NEXT.update(active);
 	}
 	
 	public void clear(){
@@ -66,8 +72,7 @@ public class Menu {
 	
 	public void setup(){}
 	
-	public void set(String id, String title, State state, boolean main, float opacity, boolean renderTitle, boolean renderActiveButton, int titleX, int titleY){
-		ID = id;
+	public void set(String title, State state, boolean main, float opacity, boolean renderTitle, boolean renderActiveButton, int titleX, int titleY){
 		TITLE = title;
 		STATE = state;
 		MAIN = main;
@@ -89,7 +94,7 @@ public class Menu {
 	}
 	
 	public static Menu parseMenu(String s){
-		Menu m = new Menu();
+		Menu m = new Menu("NOID");
 		Scanner reader = new Scanner(s);
 		m.ID = reader.nextLine();
 		m.TITLE = reader.nextLine();
@@ -188,16 +193,24 @@ public class Menu {
 		return temp;
 	}
 
-	public void process() {
+	public boolean process() {
+		boolean temp = false;
 		for(int i = 0; i < buttons.size(); i++){
-			buttons.get(i).activate();
+			if(buttons.get(i).activate()){
+				temp = true;
+			}
 		}
+		if(NEXT.activate()){
+			temp = true;
+		}
+		return temp;
 	}
 
 	public void systemUpdate(boolean active) {
 		for(int i = 0; i < buttons.size(); i++){
 			buttons.get(i).systemUpdate(active);
 		}
+		NEXT.systemUpdate(active);
 	}
 	
 	public float getScreenX(){

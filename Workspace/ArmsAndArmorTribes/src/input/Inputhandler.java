@@ -8,13 +8,16 @@ import static com.badlogic.gdx.Input.Keys.*;
 import arms.AAAT;
 import static arms.State.*;
 import arms.State;
+
+import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.InputProcessor;
 import editor.Editorhandler;
 
-public class Inputhandler implements InputProcessor {
+public class Inputhandler implements InputProcessor{
 
     public static Rectangle mouse = new Rectangle(0, 0, 0, 0);
     public static Rectangle staticMouse = new Rectangle(0, 0, 0, 0);
+    private static boolean windowInputBlocked = false;
     
 	@Override
 	public boolean keyDown(int keycode) {
@@ -147,6 +150,9 @@ public class Inputhandler implements InputProcessor {
 	}
 	@Override
 	public boolean keyTyped(char character) {
+		if(UIhandler.showWindow && !windowInputBlocked){
+			UIhandler.getWindow().input(character);
+		}
 		return false;
 	}
 	@Override
@@ -216,15 +222,28 @@ public class Inputhandler implements InputProcessor {
 	}
 	
 	public void keyDown_Window(int keycode) {
+		switch(keycode){
+			case BACKSPACE:
+				UIhandler.getWindow().rmChar();
+				windowInputBlocked = true;
+				break;
+			case ENTER:
+				UIhandler.getWindow().activateInput();
+				windowInputBlocked = true;
+				break;
+		}
 	}
 	
 	public void keyUp_Window(int keycode) {
+		windowInputBlocked = false;
 	}
 	
 	public void touchDown_Window(int button) {
+		UIhandler.activateWindowButton();
 	}
 	
 	public void touchUp_Window(int button) {
+		UIhandler.processWindow();
 	}
     
     public void updateMouse(int screenX, int screenY){

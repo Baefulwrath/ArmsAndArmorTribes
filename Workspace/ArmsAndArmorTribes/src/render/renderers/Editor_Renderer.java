@@ -1,6 +1,7 @@
 package render.renderers;
 
 import render.Renderer;
+import render.Renderinghandler;
 import ui.UIhandler;
 import world.Worldhandler;
 
@@ -28,9 +29,13 @@ public class Editor_Renderer extends Renderer {
 
 	@Override
 	public void staticRender() {
+		drawMessages(UIhandler.messages, Renderinghandler.getScreenX(), -Renderinghandler.getScreenY(), false);
 		drawMenus(UIhandler.getInsideMenus());
 		if(Editorhandler.paused){
 			drawMenu(UIhandler.getMenu());
+		}
+		if(UIhandler.showWindow){
+			drawWindow(UIhandler.getWindow());
 		}
 	}
 

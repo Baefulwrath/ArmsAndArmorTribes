@@ -144,9 +144,34 @@ public class Scripthandler {
                 setState(line.substring(9));
             }
         }
-        if (line.length() > 19) {
+        if (line.length() == 19) {
             if (cmd.equals("changeBrushClimate_")) {
             	Editorhandler.changeBrushClimate();
+            }
+        }
+        if (line.length() == 19) {
+            if (cmd.equals("changeBrushTerrain_")) {
+            	Editorhandler.changeBrushTerrain();
+            }
+        }
+        if (line.length() > 16) {
+            if (cmd.equals("setBrushClimate_")) {
+            	Editorhandler.brush.CLIMATE = Integer.parseInt(line.substring(16));
+            }
+        }
+        if (line.length() > 16) {
+            if (cmd.equals("setBrushTerrain_")) {
+            	Editorhandler.brush.TERRAIN = Integer.parseInt(line.substring(16));
+            }
+        }
+        if (line.length() > 20) {
+            if (cmd.equals("activateWindowInput_")) {
+            	UIhandler.getWindow(line.substring(20)).activateInput();
+            }
+        }
+        if (line.length() == 27) {
+            if (cmd.equals("activateCurrentWindowInput_")) {
+            	UIhandler.getWindow().activateInput();
             }
         }
     }

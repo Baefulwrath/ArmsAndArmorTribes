@@ -86,6 +86,12 @@ public class Editorhandler {
 	}
 
 	public static void changeBrushClimate() {
-		
+		UIhandler.showWindow = true;
+		UIhandler.activeWindow = "changebrushclimate";
+	}
+	
+	public static void changeBrushTerrain() {
+		UIhandler.showWindow = true;
+		UIhandler.activeWindow = "changebrushterrain";
 	}
 }

@@ -59,11 +59,14 @@ public class Button {
 		return temp;
 	}
 	
-	public void activate(){
+	public boolean activate(){
+		boolean temp = false;
 		if(ACTIVE && HOVER){
 			Scripthandler.handleScript(SCRIPT);
+			temp = true;
 		}
 		ACTIVE = false;
+		return temp;
 	}
 
 	public void systemUpdate(boolean active) {

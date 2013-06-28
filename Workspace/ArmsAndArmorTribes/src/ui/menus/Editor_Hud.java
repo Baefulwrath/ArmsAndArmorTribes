@@ -8,8 +8,9 @@ import static render.Assethandler.*;
 
 public class Editor_Hud extends Menu{
 	
-	public Editor_Hud(){
-		set("EDITOR_Hud", "", State.EDITOR, false, 1.0f, false, true, -300, 200);
+	public Editor_Hud(String id){
+		super(id);
+		set("", State.EDITOR, false, 1.0f, false, true, -300, 200);
 	}
 	
 	@Override
