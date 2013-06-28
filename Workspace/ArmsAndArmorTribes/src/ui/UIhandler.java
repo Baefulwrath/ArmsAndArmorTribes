@@ -38,20 +38,27 @@ public class UIhandler {
 	public static void update(){
 		if(readyToUpdate()){
 			if(showWindow){
-			    for(Map.Entry<String, Window> entry : windows.entrySet()){
-			    	windows.get(entry.getKey()).systemUpdate(true);
-			   	}
 				unhoverAll();
-			}else{
-			    for(Map.Entry<String, Menu> entry : mainMenus.entrySet()){
-			   		mainMenus.get(entry.getKey()).systemUpdate(getIfActiveMenu(entry.getKey(), true));
-			   	}
-			   	for(Map.Entry<String, Menu> entry : insideMenus.entrySet()){
-			   		insideMenus.get(entry.getKey()).systemUpdate(getIfActiveMenu(entry.getKey(), false));
-		    	}
 			}
+			systemUpdateWindows();
+			systemUpdateMenus();
 	    	updateMessages();
 		}
+	}
+	
+	public static void systemUpdateMenus(){
+	    for(Map.Entry<String, Menu> entry : mainMenus.entrySet()){
+	   		mainMenus.get(entry.getKey()).systemUpdate(getIfActiveMenu(entry.getKey(), true));
+	   	}
+	   	for(Map.Entry<String, Menu> entry : insideMenus.entrySet()){
+	   		insideMenus.get(entry.getKey()).systemUpdate(getIfActiveMenu(entry.getKey(), false));
+    	}
+	}
+	
+	public static void systemUpdateWindows(){
+	    for(Map.Entry<String, Window> entry : windows.entrySet()){
+	    	windows.get(entry.getKey()).systemUpdate(true);
+	   	}
 	}
 	
 	private static void unhoverAll() {
@@ -151,19 +158,19 @@ public class UIhandler {
 	}
 	
 	public static Window getWindow(){
-		if(showWindow){
+		//if(showWindow){
 			return windows.get(activeWindow);
-		}else{
-			return new Window(0, 0, 0, 0, "NOID");
-		}
+		/*}else{
+			return new Window_NOID();
+		}*/
 	}
 	
 	public static Window getWindow(String id){
-		if(showWindow){
+		//if(showWindow){
 			return windows.get(id);
-		}else{
-			return new Window(0, 0, 0, 0, "NOID");
-		}
+		/*}else{
+			return new Window_NOID();
+		}*/
 	}
 	
 	public static ArrayList<Menu> getInsideMenus(){
@@ -277,6 +284,7 @@ public class UIhandler {
 	    	insideMenus.get(entry.getKey()).process();
 	    }
    		updateMenus();
+	    updateWindows();
 	}
 
 	public static void processWindow() {
@@ -286,6 +294,7 @@ public class UIhandler {
 	    	    break;
 	    	}
 	    }
+   		updateMenus();
 	    updateWindows();
 	}
 	

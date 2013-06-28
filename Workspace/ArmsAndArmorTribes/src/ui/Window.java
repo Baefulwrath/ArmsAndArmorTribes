@@ -8,7 +8,7 @@ import scripting.Scripthandler;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
-public class Window extends Menu{
+public abstract class Window extends Menu{
 	public Rectangle BOX = new Rectangle(0, 0, 100, 50);
 	public WindowType TYPE = WindowType.DEFAULT;
 	public String MESSAGE = "MESSAGE UNSET";
@@ -55,9 +55,14 @@ public class Window extends Menu{
 	public void activateInput(){
 		setupActivation();
 		Scripthandler.handleScript(SCRIPT);
+		clearWindow();
 	}
 	
-	public void setupActivation(){}
+	private void clearWindow() {
+		INPUT = "";
+	}
+
+	public abstract void setupActivation();
 	
 	public boolean closable(){
 		boolean temp = false;
