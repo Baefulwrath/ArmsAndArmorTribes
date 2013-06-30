@@ -212,6 +212,26 @@ public class Assethandler {
     	}
     	return temp;
     }
+
+	public static int getClimateIdByString(String s) {
+		int index = 0;
+		for(int i = 0;i < climates.size(); i++){
+			if(climates.get(i).CLIMATE.equals(s)){
+				index = i;
+			}
+		}
+		return index;
+	}
+
+	public static int getTerrainIdByString(String s) {
+		int index = 0;
+		for(int i = 0;i < terrains.size(); i++){
+			if(terrains.get(i).TERRAIN.equals(s)){
+				index = i;
+			}
+		}
+		return index;
+	}
     
 }
 

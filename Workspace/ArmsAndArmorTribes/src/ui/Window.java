@@ -15,6 +15,7 @@ public abstract class Window extends Menu{
 	public String TITLE = "TITLE UNSET";
 	public String INPUT = "INPUT NOT RESET";
 	public String SCRIPT = "print_ScriptNotReset";
+	public boolean DRAWINPUT = true;
 	
 	public Window(int x, int y, int w, int h, String id){
 		super(id);
@@ -23,32 +24,37 @@ public abstract class Window extends Menu{
 		NEXT = new Button("Next", "activateCurrentWindowInput_", new Rectangle(x + w - 100, y, 100, 32), Assethandler.basicButtonStyle);
 	}
 	
-	public void setWindow(String message, String title, String defVal, WindowType type){
+	public void setWindow(String message, String title, String defVal, WindowType type, boolean drawInput){
 		MESSAGE = message;
 		TITLE = title;
 		TYPE = type;
 		INPUT = defVal;
+		DRAWINPUT = drawInput;
 	}
 	
 	public void input(char in){
-		switch(TYPE){
-			case DEFAULT:
-				INPUT += in;
-				break;
-			case TEXTINPUT:
-				INPUT += in;
-				break;
-			case NUMBERINPUT:
-				if(Character.isDigit(in)){
+		if(acceptsKeyboardInput()){
+			switch(TYPE){
+				case DEFAULT:
 					INPUT += in;
-				}
-				break;
+					break;
+				case TEXTINPUT:
+					INPUT += in;
+					break;
+				case NUMBERINPUT:
+					if(Character.isDigit(in)){
+						INPUT += in;
+					}
+					break;
+			}
 		}
 	}
 	
 	public void rmChar(){
-		if(INPUT.length() > 0){
-			INPUT = INPUT.substring(0, INPUT.length() - 1);
+		if(acceptsKeyboardInput()){
+			if(INPUT.length() > 0){
+				INPUT = INPUT.substring(0, INPUT.length() - 1);
+			}
 		}
 	}
 	
@@ -56,6 +62,29 @@ public abstract class Window extends Menu{
 		setupActivation();
 		Scripthandler.handleScript(SCRIPT);
 		clearWindow();
+		UIhandler.showWindow = false;
+	}
+	
+	@Override
+	public void update(boolean active){
+		testActiveButton();
+		clearReactiveObjects();
+		setupReactiveObjects();
+		for(int i = 0; i < buttons.size(); i++){
+			buttons.get(i).update(active);
+		}
+		NEXT.update(active);
+	}
+	
+	@Override
+	public void systemUpdate(boolean active) {
+		NEXT.systemUpdate(active);
+		clearStaticObjects();
+		setupStaticObjects();
+		for(int i = 0; i < buttons.size(); i++){
+			buttons.get(i).systemUpdate(active);
+		}
+		updateInput();
 	}
 	
 	private void clearWindow() {
@@ -63,6 +92,7 @@ public abstract class Window extends Menu{
 	}
 
 	public abstract void setupActivation();
+	public abstract void updateInput();
 	
 	public boolean closable(){
 		boolean temp = false;
@@ -103,12 +133,34 @@ public abstract class Window extends Menu{
 	}
 
 	public float getMessageY() {
-		int temp = BOX.y + (BOX.height / 4) * 3;
+		int temp = BOX.y + BOX.height - 50;
 		return temp;
 	}
 
 	public float getInputY() {
-		int temp = BOX.y + (BOX.height / 4);
+		int temp = BOX.y + BOX.height - 100;
+		return temp;
+	}
+	
+	public int getRow(int index, int rowHeightLimit){
+		int temp = 0;
+		while(index > rowHeightLimit){
+			temp++;
+			index -= rowHeightLimit;
+		}
+		return temp;
+	}
+
+	public int getButtonListX(int index, int width, int rowHeightLimit) {
+		int row = getRow(index, rowHeightLimit);
+		int temp = BOX.x + 20 + (width * row);
+		return temp;
+	}
+
+	public int getButtonListY(int index, int height, int rowHeightLimit) {
+		int row = getRow(index, rowHeightLimit);
+		int temp = BOX.y + BOX.height - 150 - (height * (index - (row * rowHeightLimit)));
+//		int temp = BOX.y + BOX.height - 150 - (height * index);
 		return temp;
 	}
 

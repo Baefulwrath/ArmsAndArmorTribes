@@ -27,7 +27,7 @@ public class UIhandler {
 	public static String activeWindow = "";
 	public static boolean showWindow = false;
     private static long lastUpdate = 0;
-    private static int updateInterval = 20;
+    private static int updateInterval = 25;
     
     public static void setup(){
     	load();
@@ -56,9 +56,7 @@ public class UIhandler {
 	}
 	
 	public static void systemUpdateWindows(){
-	    for(Map.Entry<String, Window> entry : windows.entrySet()){
-	    	windows.get(entry.getKey()).systemUpdate(true);
-	   	}
+	    getWindow().systemUpdate(true);
 	}
 	
 	private static void unhoverAll() {
@@ -112,9 +110,9 @@ public class UIhandler {
 		
 		insideMenus.put("EDITOR_Hud", new Editor_Hud("EDITOR_Hud"));
 		
-		windows.put("test", new Window_Test(-250, -100, 500, 200, "test"));
-		windows.put("changebrushclimate", new Window_ChangeBrushClimate(-250, -100, 500, 200, "changebrushclimate"));
-		windows.put("changebrushterrain", new Window_ChangeBrushTerrain(-250, -100, 500, 200, "changebrushterrain"));
+		windows.put("test", new Window_Test("test"));
+		windows.put("changebrushclimate", new Window_ChangeBrushClimate("changebrushclimate"));
+		windows.put("changebrushterrain", new Window_ChangeBrushTerrain("changebrushterrain"));
 		//loadMenusFromFolder();
 		activeWindow = "test";
 		resetActiveMenu(AAAT.state);
@@ -289,10 +287,7 @@ public class UIhandler {
 
 	public static void processWindow() {
 	    for(Map.Entry<String, Window> entry : windows.entrySet()){
-	    	if(windows.get(entry.getKey()).process()){
-	    	    showWindow = false;
-	    	    break;
-	    	}
+	    	windows.get(entry.getKey()).process();
 	    }
    		updateMenus();
 	    updateWindows();

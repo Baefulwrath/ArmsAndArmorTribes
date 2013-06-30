@@ -1,7 +1,7 @@
 package ui;
 
 public enum WindowType {
-	DEFAULT, MESSAGE, WARNING, TEXTINPUT, NUMBERINPUT;
+	DEFAULT, MESSAGE, WARNING, TEXTINPUT, NUMBERINPUT, LISTINPUT;
     
     @Override
     public String toString() {

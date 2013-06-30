@@ -174,6 +174,11 @@ public class Scripthandler {
             	UIhandler.getWindow().activateInput();
             }
         }
+        if (line.length() > 22) {
+            if (cmd.equals("setCurrentWindowInput_")) {
+            	UIhandler.getWindow().INPUT = line.substring(22);
+            }
+        }
     }
 
 	private static void setState(String s) {

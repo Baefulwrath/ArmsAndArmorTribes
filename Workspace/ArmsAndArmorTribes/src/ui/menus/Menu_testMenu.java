@@ -23,10 +23,15 @@ public class Menu_TestMenu extends Menu{
 	}
 	
 	@Override
-	public void setup(){
+	public void setupReactiveObjects(){
 		addLabel("LABELTEST", Assethandler.messageLabelStyle, -200, 50);
 		addImage(Editorhandler.brush.getClimateSprite(), 0, -100, 64, 64);
 		addButton("Test Button", "", 0, 100, 150, 32, Assethandler.basicButtonStyle);
+	}
+	
+	@Override
+	public void setupStaticObjects(){
+		
 	}
 	
 }

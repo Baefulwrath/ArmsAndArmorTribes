@@ -8,16 +8,20 @@ public class Window_NOID extends Window{
 
 	public Window_NOID() {
 		super(0, 0, 0, 0, "NOID");
-		setWindow("NOID", "NOID", "", WindowType.DEFAULT);
+		setWindow("NOID", "NOID", "", WindowType.DEFAULT, false);
 	}
 	
 	@Override
-	public void setup(){
+	public void setupReactiveObjects(){
 	}
 	
 	@Override
 	public void setupActivation(){
 		SCRIPT = "print_NOID";
+	}
+
+	@Override
+	public void updateInput() {
 	}
 
 }

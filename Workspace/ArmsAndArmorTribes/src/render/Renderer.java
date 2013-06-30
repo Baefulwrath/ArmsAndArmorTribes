@@ -178,7 +178,9 @@ public abstract class Renderer {
     	}
     	drawString(w.MESSAGE, w.BOX.x + 20, w.getMessageY(), w.getLabelStyle(), 1.0f);
     	drawString(w.TITLE, w.BOX.x + 6, w.BOX.y + w.BOX.height - w.getLabelStyle().font.getCapHeight(), w.getLabelStyle(), 1.0f);
-    	drawString(w.INPUT, w.BOX.x + 20, w.getInputY(), basicLabelStyle, 1.0f);
+    	if(w.DRAWINPUT){
+    		drawString(w.INPUT, w.BOX.x + 20, w.getInputY(), basicLabelStyle, 1.0f);
+    	}
     	drawMenu(w);
     	drawButton(w.NEXT);
     }

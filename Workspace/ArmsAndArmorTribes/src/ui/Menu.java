@@ -45,19 +45,29 @@ public class Menu {
 	
 	public void update(boolean active){
 		testActiveButton();
-		clear();
-		setup();
+		clearReactiveObjects();
+		setupReactiveObjects();
 		for(int i = 0; i < buttons.size(); i++){
 			buttons.get(i).update(active);
 		}
-		NEXT.update(active);
+	}
+
+	public void systemUpdate(boolean active) {
+		for(int i = 0; i < buttons.size(); i++){
+			buttons.get(i).systemUpdate(active);
+		}
+		clearStaticObjects();
+		setupStaticObjects();
 	}
 	
-	public void clear(){
+	public void clearReactiveObjects(){
+		buttons.clear();
+	}
+	
+	public void clearStaticObjects(){
 		labels.clear();
 		images.clear();
 		ninepatches.clear();
-		buttons.clear();
 		cellImages.clear();
 		collisionAreas.clear();
 	}
@@ -70,7 +80,8 @@ public class Menu {
 		}
 	}
 	
-	public void setup(){}
+	public void setupReactiveObjects(){}
+	public void setupStaticObjects(){}
 	
 	public void set(String title, State state, boolean main, float opacity, boolean renderTitle, boolean renderActiveButton, int titleX, int titleY){
 		TITLE = title;
@@ -204,13 +215,6 @@ public class Menu {
 			temp = true;
 		}
 		return temp;
-	}
-
-	public void systemUpdate(boolean active) {
-		for(int i = 0; i < buttons.size(); i++){
-			buttons.get(i).systemUpdate(active);
-		}
-		NEXT.systemUpdate(active);
 	}
 	
 	public float getScreenX(){
